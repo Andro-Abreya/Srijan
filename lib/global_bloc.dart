@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:genesis_flutter/Medicine.dart';
+import 'package:genesis_flutter/trackers/MedicineTracker/Medicine.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:genesis_flutter/Medicine.dart';
+import 'package:genesis_flutter/trackers/MedicineTracker/Medicine.dart';
 import 'package:genesis_flutter/color.dart';
 import 'package:genesis_flutter/global_bloc.dart';
 import 'package:provider/provider.dart';

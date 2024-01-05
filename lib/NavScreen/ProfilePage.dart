@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:genesis_flutter/Screens/SignInPage.dart';
-import 'package:genesis_flutter/Screens/SplashScreen.dart';
+import 'package:genesis_flutter/onboarding/SignInPage.dart';
+import 'package:genesis_flutter/onboarding/SplashScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 

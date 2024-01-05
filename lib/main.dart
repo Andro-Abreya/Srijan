@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:genesis_flutter/Screens/NavScreen/BaseScreen.dart';
-import 'package:genesis_flutter/Screens/SplashScreen.dart';
+import 'package:genesis_flutter/NavScreen/BaseScreen.dart';
+import 'package:genesis_flutter/onboarding/SplashScreen.dart';
 import 'package:genesis_flutter/global_bloc.dart';
 import 'package:provider/provider.dart';
 
