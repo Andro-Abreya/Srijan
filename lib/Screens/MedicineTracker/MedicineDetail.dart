@@ -14,10 +14,10 @@ import 'package:genesis_flutter/Screens/MedicineTracker/SuccessfulMedAddScreen.d
 import 'package:provider/provider.dart';
 
 
-Color purple = Color(0xFF514B6F);
-Color textCol = Color(0xFF393451);
-Color pinkColor =  Color(0xFFEDA8CC);
-Color myTealColor = Color(0xFF40ABA6);
+Color purple = const Color(0xFF514B6F);
+Color textCol = const Color(0xFF393451);
+Color pinkColor =  const Color(0xFFEDA8CC);
+Color myTealColor = const Color(0xFF40ABA6);
 
 class MedicineDetails extends StatefulWidget {
   const MedicineDetails( {Key? key}) : super(key: key);
@@ -56,7 +56,7 @@ class _MedicineDetailsState extends State<MedicineDetails> {
     final GlobalBloc globalBloc = Provider.of<GlobalBloc>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Medicine Tracker'),
+        title: const Text('Medicine Tracker'),
       ),
       body: SingleChildScrollView(
         child: Provider<NewEntryBloc>.value(
@@ -67,12 +67,12 @@ class _MedicineDetailsState extends State<MedicineDetails> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // Input fields for medicine name and dosage
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 TextField(
                   controller: medNameController,
                   decoration: InputDecoration(
                     labelText: 'Medicine Name',
-                    contentPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 4.0),
                     hintStyle: TextStyle(
                         color: textCol,
                         fontWeight: FontWeight
@@ -82,13 +82,13 @@ class _MedicineDetailsState extends State<MedicineDetails> {
                     filled: true,
                   ),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 TextField(
                   controller: dosageController,
-                  decoration: InputDecoration(labelText: 'Dosage (mg)'),
+                  decoration: const InputDecoration(labelText: 'Dosage (mg)'),
                   keyboardType: TextInputType.number,
                 ),
-                SizedBox(height: 40.0),
+                const SizedBox(height: 40.0),
 
                 // Medicine options in cards
 
@@ -97,7 +97,7 @@ class _MedicineDetailsState extends State<MedicineDetails> {
                   style: TextStyle(
                       color: textCol, fontSize: 18, fontWeight: FontWeight.w500),
                 ),
-                SizedBox(height: 15.0),
+                const SizedBox(height: 15.0),
                 StreamBuilder<MedicineType>(
                   stream: _newEntryBloc.selectedMedicineType,
                   builder: (context, snapshot) {
@@ -136,7 +136,7 @@ class _MedicineDetailsState extends State<MedicineDetails> {
                     );
                   },
                 ),
-                SizedBox(height: 40.0),
+                const SizedBox(height: 40.0),
 
                 Text(
                   "Select Interval",
@@ -144,16 +144,16 @@ class _MedicineDetailsState extends State<MedicineDetails> {
                       color: textCol, fontSize: 18, fontWeight: FontWeight.w500),
                 ),
 
-                IntervalSelection(),
+                const IntervalSelection(),
 
-                SizedBox(height: 40.0),
+                const SizedBox(height: 40.0),
                 Text(
                   "Starting Time",
                   style: TextStyle(
                       color: textCol, fontSize: 18, fontWeight: FontWeight.w500),
                 ),
-                SelectTime(),
-                SizedBox(height: 20.0),
+                const SelectTime(),
+                const SizedBox(height: 20.0),
                 Padding(
                   padding: const EdgeInsets.only(top: 12.0, left: 50, right: 50),
                   child: TextButton(
@@ -228,14 +228,14 @@ class _MedicineDetailsState extends State<MedicineDetails> {
                         scheduleNotification(newEntryMedicine);
 
                       Navigator.push(
-                        context, MaterialPageRoute(builder: (context)=>SuccessfulMedAddScreen()),
+                        context, MaterialPageRoute(builder: (context)=>const SuccessfulMedAddScreen()),
                       );
 
 
 
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.all(7.0),
+                    child: const Padding(
+                      padding: EdgeInsets.all(7.0),
                       child: Text(
                         "Submit",
                         style: TextStyle(
@@ -308,7 +308,7 @@ class _MedicineDetailsState extends State<MedicineDetails> {
     }
     await Navigator.push(
         context,MaterialPageRoute(
-        builder:(context)=> HomePage()) );
+        builder:(context)=> const HomePage()) );
   }
 
   Future<void > scheduleNotification(Medicine medicine) async{
@@ -367,11 +367,11 @@ class _IntervalSelectionState extends State<IntervalSelection> {
 
     final NewEntryBloc newEntryBloc = Provider.of<NewEntryBloc>(context);
     return Padding(
-      padding: EdgeInsets.only(top: 1),
+      padding: const EdgeInsets.only(top: 1),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
+          const Text(
             "Remind me everyday: ",
             style: TextStyle(
               fontSize: 16,
@@ -410,7 +410,7 @@ class _IntervalSelectionState extends State<IntervalSelection> {
               }),
           Text(
             _selected == 1 ? "hour" : "hours",
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
             ),
           ),
@@ -450,7 +450,7 @@ class _SelectTimeState extends State<SelectTime> {
   Widget build(BuildContext context) {
    // final NewEntryBloc newEntryBloc = Provider.of<NewEntryBloc>(context);
 
-    return Container(
+    return SizedBox(
       width: 100,
       child: Padding(
         padding: const EdgeInsets.only(top: 12.0),
@@ -468,7 +468,7 @@ class _SelectTimeState extends State<SelectTime> {
               _clicked == false
                   ? "Select Time"
                   : "${convertTime(_time.hour.toString())}:${convertTime(_time.minute.toString())}",
-              style: TextStyle(
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.bold),
@@ -527,7 +527,7 @@ class MedicineTypeColumn extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 8), // Adjust the spacing between the icon and text
+          const SizedBox(height: 8), // Adjust the spacing between the icon and text
           Container(
             decoration: BoxDecoration(
                 color: isSelected ? pinkColor : Colors.transparent,
@@ -536,7 +536,7 @@ class MedicineTypeColumn extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 name,
-                style: Theme.of(context).textTheme.subtitle2,
+                style: Theme.of(context).textTheme.titleSmall,
               ),
             ),
           ),

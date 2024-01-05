@@ -9,6 +9,8 @@ import 'package:genesis_flutter/Screens/NavScreen/ProfilePage.dart';
 Color cardColor = const Color(0xFF514B6F);
 
 class BaseScreen extends StatefulWidget {
+  const BaseScreen({super.key});
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -17,10 +19,10 @@ class _MyAppState extends State<BaseScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _fragments = [
-    HomePage(),
-    CommunityPage(),
-    AidPage(),
-    ProfilePage(),
+    const HomePage(),
+    const CommunityPage(),
+    const AidPage(),
+    const ProfilePage(),
   ];
 
   @override
@@ -35,7 +37,7 @@ class _MyAppState extends State<BaseScreen> {
           height: 50, // Navigation bar background color
           style: TabStyle.reactCircle, // Modern style
           curveSize: 90, // Curve size for the icons
-          items: [
+          items: const [
             TabItem(
               icon: Icons.home,
               title: 'Home',

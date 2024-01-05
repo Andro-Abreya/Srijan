@@ -48,6 +48,7 @@ dependencies:
   rxdart: any
   lottie:
   flutter_local_notifications: ^10.0.0
+  intl: ^0.17.0
 
 
 dev_dependencies:

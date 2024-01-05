@@ -17,28 +17,28 @@ class _MedicineInfoDisplayState extends State<MedicineInfoDisplay> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalBloc _globalBloc = Provider.of<GlobalBloc>(context);
+    final GlobalBloc globalBloc = Provider.of<GlobalBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Details'),
       ),
       body:  Padding(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
             MainSection( medicine: widget.medicine),
             ExtendedSection(medicine: widget.medicine),
-            Spacer(),
+            const Spacer(),
             SizedBox(
               width: 300,
               child: TextButton(
                 style: TextButton.styleFrom(
                     backgroundColor: myTealColor, shape: const StadiumBorder()),
                 onPressed: () {
-                  openAlertBox(context, _globalBloc);
+                  openAlertBox(context, globalBloc);
                 },
-                child: Padding(
-                  padding: const EdgeInsets.all(7.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(7.0),
                   child: Text(
                      "Delete",
                     style: TextStyle(
@@ -49,7 +49,7 @@ class _MedicineInfoDisplayState extends State<MedicineInfoDisplay> {
                 ),
               ),
             ),
-              SizedBox(height: 40,)
+              const SizedBox(height: 40,)
           ],
         ),
       ),
@@ -58,10 +58,10 @@ class _MedicineInfoDisplayState extends State<MedicineInfoDisplay> {
 
 
 
-  openAlertBox(BuildContext context, GlobalBloc _globalBloc){
+  openAlertBox(BuildContext context, GlobalBloc globalBloc){
       return showDialog(context: context, builder: (context){
         return AlertDialog(
-          shape:  RoundedRectangleBorder(
+          shape:  const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(10),
               topLeft:  Radius.circular(10),
@@ -85,7 +85,7 @@ class _MedicineInfoDisplayState extends State<MedicineInfoDisplay> {
                 ),)),
             TextButton(
                 onPressed: (){
-                  _globalBloc.removeMedicine(widget.medicine);
+                  globalBloc.removeMedicine(widget.medicine);
                   Navigator.popUntil(context, ModalRoute.withName('/'));
                 },
                 child: Text("Delete",
@@ -134,7 +134,7 @@ class MainSection extends StatelessWidget {
 
     return Hero(
       tag: medicine!.medicineName!+medicine!.medicineType!,
-      child: Icon(Icons.error),
+      child: const Icon(Icons.error),
     );
   }
 
@@ -149,7 +149,7 @@ class MainSection extends StatelessWidget {
                   Hero(
                     tag: medicine!.medicineName!,
                       child: MainInfoTab(fieldTitle: "Medicine Name", fieldInfo: medicine!.medicineName!)),
-                  SizedBox(height: 8,),
+                  const SizedBox(height: 8,),
                   MainInfoTab(fieldTitle: "Dosage", fieldInfo: medicine!.dosage==0?
                   "Not Specified":"${medicine!.dosage} mg")
                 ],
@@ -177,11 +177,11 @@ class MainInfoTab extends StatelessWidget {
           children: [
             Text(
               fieldTitle,
-              style: TextStyle(
+              style: const TextStyle(
                   color: Colors.grey,
                   fontSize: 12),
             ),
-            SizedBox(height: 4,),
+            const SizedBox(height: 4,),
             Text(
               fieldInfo,
               style: TextStyle(

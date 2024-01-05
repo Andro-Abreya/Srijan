@@ -50,8 +50,8 @@ class NewEntryBloc{
   }
 
   void updateSelectedMedicine(MedicineType type){
-    MedicineType _tempType = _selectedMedicineTypes$!.value;
-    if(type == _tempType){
+    MedicineType tempType = _selectedMedicineTypes$!.value;
+    if(type == tempType){
       _selectedMedicineTypes$!.add(MedicineType.none);
     }else{
       _selectedMedicineTypes$!.add(type);
