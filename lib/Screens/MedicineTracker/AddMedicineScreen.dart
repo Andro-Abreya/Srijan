@@ -6,14 +6,14 @@ import 'package:genesis_flutter/Screens/MedicineTracker/MedicineInfoDisplay.dart
 import 'package:genesis_flutter/global_bloc.dart';
 import 'package:provider/provider.dart';
 
-Color purple = Color(0xFF514B6F);
-Color textCol = Color(0xFF393451);
+Color purple = const Color(0xFF514B6F);
+Color textCol = const Color(0xFF393451);
 Color pinkColor = const Color(0xFFEDA8CC);
-Color myTealColor = Color(0xFF40ABA6);
-Color darkPink = Color(0xFFD34389);
-Color pink1 = Color(0xFFFF69B4);
-Color lightPink = Color(0xFFFF69B4).withOpacity(0.8);
-Color lightPurple = Color(0xFFB2B2FF).withOpacity(0.8);
+Color myTealColor = const Color(0xFF40ABA6);
+Color darkPink = const Color(0xFFD34389);
+Color pink1 = const Color(0xFFFF69B4);
+Color lightPink = const Color(0xFFFF69B4).withOpacity(0.8);
+Color lightPurple = const Color(0xFFB2B2FF).withOpacity(0.8);
 
 class AddMedicineScreen extends StatelessWidget {
   const AddMedicineScreen({super.key});
@@ -30,8 +30,8 @@ class AddMedicineScreen extends StatelessWidget {
         children: [
           Container(
             alignment: Alignment.topLeft,
-            padding: EdgeInsets.only(left:20, top:20, bottom:10),
-            child: Text(
+            padding: const EdgeInsets.only(left:20, top:20, bottom:10),
+            child: const Text(
               'Worry less. \nLive healthier.',
               style:TextStyle(
                 fontSize: 32,
@@ -47,7 +47,7 @@ class AddMedicineScreen extends StatelessWidget {
               padding: const EdgeInsets.only(left:24.0,),
               child: Text(
                 'Welcome to Daily Dose.',
-                style: Theme.of(context).textTheme.subtitle2,
+                style: Theme.of(context).textTheme.titleSmall,
               ),
             ),
           ),
@@ -59,7 +59,7 @@ class AddMedicineScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top:10.0, left:12),
                 child: Text(
                     snapshot.hasData?snapshot.data!.length.toString():'0',
-                    style:TextStyle(
+                    style:const TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.w900,
                     )
@@ -77,7 +77,7 @@ class AddMedicineScreen extends StatelessWidget {
         floatingActionButton: InkResponse(
           onTap: (){
             Navigator.push(
-              context, MaterialPageRoute(builder: (context)=>MedicineDetails()),
+              context, MaterialPageRoute(builder: (context)=>const MedicineDetails()),
             );
           },
           child: Padding(
@@ -85,11 +85,11 @@ class AddMedicineScreen extends StatelessWidget {
             padding: const EdgeInsets.only(right:10, bottom:25),
             child: Card(
               color:purple,
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
               //shape: LargerRadiusCircleBorder(),
                 elevation: 6.0, // Adjust the elevation for a larger visual effect,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Icon(
                         Icons.add_outlined,
                     color: Colors.white,
@@ -135,7 +135,7 @@ class BottomContainer extends StatelessWidget{
                 child: GridView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                   ),
                   itemCount: snapshot.data!.length,
@@ -251,7 +251,7 @@ class MedicineCard extends StatelessWidget {
 
     return Hero(
       tag: medicine.medicineName!+medicine.medicineType!,
-      child: Icon(Icons.error),
+      child: const Icon(Icons.error),
     );
   }
 
@@ -284,14 +284,14 @@ class MedicineCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
-          margin: EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: pinkColor,
             borderRadius: BorderRadius.circular(20),
           ),
           child: Column(
             children: [
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               makeIcon(),
               Hero(
                 tag: medicine.medicineName!,
@@ -310,7 +310,7 @@ class MedicineCard extends StatelessWidget {
                 "Every ${medicine.interval} hour",
                 overflow: TextOverflow.fade,
                 textAlign: TextAlign.start,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,),
               ),
@@ -318,7 +318,7 @@ class MedicineCard extends StatelessWidget {
           ),
         ),
       ),
-    );;
+    );
   }
 }
 

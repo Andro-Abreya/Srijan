@@ -7,18 +7,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 Color cardColor = const Color(0xFF514B6F);
-Color textCol = Color(0xFF393451);
+Color textCol = const Color(0xFF393451);
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 FirebaseAuth auth = FirebaseAuth.instance;
 
 class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final FirebaseAuth auth = FirebaseAuth.instance;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: const Text('Home Page'),
       ),
       body: Center(
         child: GestureDetector(
@@ -26,17 +28,17 @@ class ProfilePage extends StatelessWidget {
             var sharedPref = await SharedPreferences.getInstance();
             // sharedPref.setBool(SplashScreenState.KEYPROF,false );
             sharedPref.setString(SplashScreenState.KEYSIGNIN,"");
-            _auth.signOut();
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> SignInPage()));
+            auth.signOut();
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> const SignInPage()));
           },
           child: Container(
             width: 120,
-            padding: EdgeInsets.only(top: 8, bottom: 8, right: 15,left: 15),
+            padding: const EdgeInsets.only(top: 8, bottom: 8, right: 15,left: 15),
             decoration: BoxDecoration(
                 color: cardColor,
                 borderRadius: BorderRadius.circular(10)
             ),
-            child: Row(
+            child: const Row(
               children: [
                 Text(
                   'Logout',

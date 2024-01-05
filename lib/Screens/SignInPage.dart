@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:genesis_flutter/Screens/CreateProfile.dart';
@@ -10,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 Color cardColor = const Color(0xFF514B6F);
-Color textCol = Color(0xFF393451);
+Color textCol = const Color(0xFF393451);
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
 
@@ -21,8 +20,8 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage>{
   @override
   Widget build(BuildContext context) {
-    final AuthMethods _authMethods = AuthMethods();
-    final GoogleSignIn _googleSignIn = GoogleSignIn();
+    final AuthMethods authMethods = AuthMethods();
+    final GoogleSignIn googleSignIn = GoogleSignIn();
     //AuthService authService = AuthService();
     double screenWidth = MediaQuery.of(context).size.width;
     return
@@ -32,7 +31,7 @@ class _SignInPageState extends State<SignInPage>{
           // Space between illustration and button
           child: Stack(
             children: [
-              Align(
+              const Align(
                 alignment: Alignment.center,
                 child:
                 Column(
@@ -51,32 +50,28 @@ class _SignInPageState extends State<SignInPage>{
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   width: screenWidth,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40)),
                     color: Colors.white,
                   ),
                   child: GestureDetector(
                     onTap: () async {
-                      await _googleSignIn.signOut();
+                      await googleSignIn.signOut();
                       //await _googleSignIn.disconnect();
                       //authService.handleSignOut();
                       //GoogleSignIn().disconnect();
                       final user = FirebaseAuth.instance.currentUser;
-                      int res = await _authMethods.signInWithGoogle();
+                      int res = await authMethods.signInWithGoogle();
                       var sharedPref = await SharedPreferences.getInstance();
-                      sharedPref.setString(SplashScreenState.KEYSIGNIN, user!.uid );
+                      sharedPref.setString(SplashScreenState.KEYSIGNIN, (user?.uid).toString() );
                       navigateFromSignIn();
-
-
-
                     },
-
 
                     child: Column(
                       children: [
-                        SizedBox(height: 130),
+                        const SizedBox(height: 130),
                         Padding(
-                          padding:EdgeInsets.all(2.0) ,
+                          padding:const EdgeInsets.all(2.0) ,
                           child:
                           Image.asset(
                             'assets/images/mother_preg_login.png',
@@ -103,12 +98,12 @@ class _SignInPageState extends State<SignInPage>{
                                     child: Container(
                                       width: 55, // Set the width of the circular button
                                       height: 55, // Set the height of the circular button
-                                      decoration: BoxDecoration( // Make it circular
+                                      decoration: const BoxDecoration( // Make it circular
                                         color: Colors.white, // Set the background color to white
                                       ),
                                       child:
                                       Padding(
-                                        padding:EdgeInsets.all(2.0) ,
+                                        padding:const EdgeInsets.all(2.0) ,
                                         child:
                                         Image.asset(
                                           'assets/images/google_icon.png',
@@ -119,7 +114,7 @@ class _SignInPageState extends State<SignInPage>{
                                     ),
                                   ),
 
-                                  SizedBox(width: 40,) ,
+                                  const SizedBox(width: 40,) ,
                                   const Text(
                                     'Sign in with Google',
                                     style: TextStyle(
@@ -151,13 +146,13 @@ class _SignInPageState extends State<SignInPage>{
     if(isProfCreated != null){
 
       if(isProfCreated){
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> BaseScreen()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> const BaseScreen()));
       }else{
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> CreateProfileScreen()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> const CreateProfileScreen()));
       }
 
     }else{
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> CreateProfileScreen()));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> const CreateProfileScreen()));
     }
   }
 

@@ -4,13 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:genesis_flutter/Screens/NavScreen/BaseScreen.dart';
-import 'package:genesis_flutter/Screens/SignInPage.dart';
 import 'package:genesis_flutter/Screens/SplashScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-Color purple = Color(0xFF514B6F);
-Color textCol = Color(0xFF393451);
+Color purple = const Color(0xFF514B6F);
+Color textCol = const Color(0xFF393451);
 Color pinkColor = const Color(0xFFEDA8CC);
 
 final TextEditingController nameController = TextEditingController();
@@ -24,6 +23,8 @@ final TextEditingController pregnancyMonthController = TextEditingController();
 
 
 class CreateProfileScreen extends StatefulWidget {
+  const CreateProfileScreen({super.key});
+
   @override
   _CreateProfileScreenState createState() => _CreateProfileScreenState();
 }
@@ -41,7 +42,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Profile'),
+        title: const Text('Create Profile'),
       ),
       body: Container(
           decoration: BoxDecoration(
@@ -52,7 +53,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
             padding: const EdgeInsets.only(left: 30.0, top:30, right:30),
             child: ListView(
               children: [
-                Text(
+                const Text(
                   'Name',
                   style: TextStyle(
                     color: Colors.white,
@@ -60,18 +61,18 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     fontSize: 16.0,
                   ),
                 ),
-                SizedBox(height: 8.0),
+                const SizedBox(height: 8.0),
                 Padding(
                   padding: const EdgeInsets.only(right: 20),
                   child: TextField(
                     controller: nameController,
                     decoration: InputDecoration(
                       hintText: 'Enter your Name',
-                        contentPadding: EdgeInsets.symmetric(horizontal: 19.0),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 19.0),
                       hintStyle: TextStyle(color: textCol), // Set hint text color to a lighter shade
                       fillColor: Colors.white, // Set the background color of the text box
                       filled: true,
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white), // Set border color
                       ),
                     ),
@@ -82,8 +83,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     },
                   ),
                 ),
-                SizedBox(height: 16.0),
-                Text(
+                const SizedBox(height: 16.0),
+                const Text(
                   'Age',
                   style: TextStyle(
                     color: Colors.white,
@@ -91,18 +92,18 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     fontSize: 16.0,
                   ),
                 ),
-                SizedBox(height: 8.0),
+                const SizedBox(height: 8.0),
                 Padding(
                   padding: const EdgeInsets.only(right:20.0),
                   child: TextField(
                     controller: ageController,
                     decoration: InputDecoration(
                       hintText: 'Enter your age',
-                      contentPadding: EdgeInsets.symmetric(horizontal: 19.0),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 19.0),
                       hintStyle: TextStyle(color: textCol), // Set hint text color to a lighter shade
                       fillColor: Colors.white, // Set the background color of the text box
                       filled: true,
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white), // Set border color
                       ),
                     ),
@@ -113,14 +114,14 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     },
                   ),
                 ),
-                SizedBox(height: 16.0),
-                Text(
+                const SizedBox(height: 16.0),
+                const Text(
                   'Select an option:',
                   style: TextStyle(fontSize: 16.0,
                     color: Colors.white,
                   ),
                 ),
-                SizedBox(height: 8.0),
+                const SizedBox(height: 8.0),
                 GestureDetector(
                   onTap: () {
                     setState(() {
@@ -132,7 +133,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       }
                     });
                   },
-                  child: Container(
+                  child: SizedBox(
                     height: 100,
                     width: 300,
                     child: Card(
@@ -150,7 +151,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 80),
+                            const SizedBox(width: 80),
 
                             Image.asset(
                               'assets/images/pregnant.png', // Replace with the path to your local image asset
@@ -165,7 +166,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 8.0),
+                const SizedBox(height: 8.0),
                 GestureDetector(
                   onTap: () {
                     setState(() {
@@ -177,7 +178,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       }
                     });
                   },
-                  child: Container(
+                  child: SizedBox(
                     height: 100,
                     width: 300,
                     child: Card(
@@ -194,7 +195,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 80),
+                          const SizedBox(width: 80),
                           Image.asset(
                             'assets/images/mother_child.png', // Replace with the path to your local image asset
                             width: 80, // Set the width as needed
@@ -212,8 +213,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      SizedBox(height: 16.0),
-                      Text(
+                      const SizedBox(height: 16.0),
+                      const Text(
                         'Enter Pregnancy Month:',
                          style: TextStyle(
                            color: Colors.white,
@@ -221,7 +222,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                            fontSize: 16.0,
                          ),
                       ),
-                      SizedBox(height: 8.0),
+                      const SizedBox(height: 8.0),
                       Padding(
                         padding: const EdgeInsets.only(right:20.0),
                         child: TextField(
@@ -229,11 +230,11 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             hintText: 'Enter pregnancy month',
-                            contentPadding: EdgeInsets.symmetric(horizontal: 19.0),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 19.0),
                             hintStyle: TextStyle(color: textCol), // Set hint text color to a lighter shade
                             fillColor: Colors.white, // Set the background color of the text box
                             filled: true,
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white), // Set border color
                             ),
                           ),
@@ -250,8 +251,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      SizedBox(height: 16.0),
-                      Text(
+                      const SizedBox(height: 16.0),
+                      const Text(
                         'Enter Child Age:',
                         style: TextStyle(
                           color: Colors.white,
@@ -259,7 +260,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                           fontSize: 16.0
                         ),
                       ),
-                      SizedBox(height: 8.0),
+                      const SizedBox(height: 8.0),
                       Padding(
                         padding: const EdgeInsets.only(right:20.0),
                         child: TextField(
@@ -267,11 +268,11 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             hintText: 'Enter child age',
-                            contentPadding: EdgeInsets.symmetric(horizontal: 19.0),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 19.0),
                             hintStyle: TextStyle(color: textCol), // Set hint text color to a lighter shade
                             fillColor: Colors.white, // Set the background color of the text box
                             filled: true,
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white), // Set border color
                             ),
                           ),
@@ -284,7 +285,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       ),
                     ],
                   ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
               ],
             ),
           ),
@@ -320,7 +321,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
               });
 
               Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (_) => BaseScreen()));
+                  MaterialPageRoute(builder: (_) => const BaseScreen()));
               //   print(
               //       'Name: $name, Roll Number: $rollNumber, Hostel: $hostel');
             }
@@ -329,15 +330,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
 
             width: 140, // Set the width of the circular button
             height: 60, // Set the height of the circular button
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             alignment: Alignment.center,
-            child: Text("Save Profile",
-              style: TextStyle(
-                fontSize: 20.0, // Optional: Set font size
-                color: Colors.white, // Optional: Set text color
-                fontWeight: FontWeight.bold, // Optional: Set font weight
-              ),
-            ),
             decoration: BoxDecoration(// Make it circular
               color: purple,
               borderRadius: BorderRadius.circular(20),
@@ -347,10 +341,17 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 2,
                   blurRadius: 5,
-                  offset: Offset(0, 2), // Add a shadow to the button (optional)
+                  offset: const Offset(0, 2), // Add a shadow to the button (optional)
                 ),
               ],
 
+            ),
+            child: const Text("Save Profile",
+              style: TextStyle(
+                fontSize: 20.0, // Optional: Set font size
+                color: Colors.white, // Optional: Set text color
+                fontWeight: FontWeight.bold, // Optional: Set font weight
+              ),
             ),
           ),
         ),

@@ -19,6 +19,7 @@ class _SuccessfulMedAddScreenState extends State<SuccessfulMedAddScreen> {
       Navigator.popUntil(context, ModalRoute.withName('/'));
     });
   }
+  @override
   Widget build(BuildContext context) {
     return  Material(
       color: Colors.white,

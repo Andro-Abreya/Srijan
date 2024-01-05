@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:genesis_flutter/Screens/CreateProfile.dart';
 import 'package:genesis_flutter/Screens/NavScreen/BaseScreen.dart';
@@ -8,14 +6,16 @@ import 'package:genesis_flutter/Screens/SignInPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 
 
-Color purple = Color(0xFF514B6F);
-Color textCol = Color(0xFF393451);
+Color purple = const Color(0xFF514B6F);
+Color textCol = const Color(0xFF393451);
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,12 +23,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
 
   @override
   SplashScreenState createState() => SplashScreenState();
@@ -58,12 +60,12 @@ class SplashScreenState extends State<SplashScreen> {
               width: 240,
               height: 240,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Image.asset(
               "assets/images/genesis_title.png",
               width: 120,
             ),
-            SizedBox(height: 150),
+            const SizedBox(height: 150),
 
 
             //  InkWell(
@@ -129,37 +131,37 @@ class SplashScreenState extends State<SplashScreen> {
 
 
     if(isLoggedIn == null){
-      Timer(Duration(seconds: 3),(){
-              Navigator.pushReplacement(context as BuildContext,
-                  MaterialPageRoute(builder: (context) => SignInPage(),));
+      Timer(const Duration(seconds: 3),(){
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const SignInPage(),));
 
             },);
     }else{
       if(isProfCreated != null){
         if(isProfCreated){
 
-          Timer(Duration(seconds: 3),(){
-            Navigator.pushReplacement(context as BuildContext,
-                MaterialPageRoute(builder: (context) => BaseScreen(),));
+          Timer(const Duration(seconds: 3),(){
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const BaseScreen(),));
 
           },);
 
 
         }else{
 
-          Timer(Duration(seconds: 3), () {
+          Timer(const Duration(seconds: 3), () {
             Navigator.pushReplacement(
-              context as BuildContext ,
-              MaterialPageRoute(builder: (context) => CreateProfileScreen()),
+              context ,
+              MaterialPageRoute(builder: (context) => const CreateProfileScreen()),
             );
           });
         }
       }else{
 
-        Timer(Duration(seconds: 3), () {
+        Timer(const Duration(seconds: 3), () {
           Navigator.pushReplacement(
-            context as BuildContext ,
-            MaterialPageRoute(builder: (context) => CreateProfileScreen()),
+            context ,
+            MaterialPageRoute(builder: (context) => const CreateProfileScreen()),
           );
         });
 
