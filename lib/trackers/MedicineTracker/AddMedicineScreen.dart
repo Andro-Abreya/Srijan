@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:genesis_flutter/Medicine.dart';
-import 'package:genesis_flutter/Screens/MedicineTracker/MedicineDetail.dart';
-import 'package:genesis_flutter/Screens/MedicineTracker/MedicineInfoDisplay.dart';
+import 'package:genesis_flutter/trackers/MedicineTracker/Medicine.dart';
+import 'package:genesis_flutter/trackers/MedicineTracker/MedicineDetail.dart';
+import 'package:genesis_flutter/trackers/MedicineTracker/MedicineInfoDisplay.dart';
 import 'package:genesis_flutter/global_bloc.dart';
 import 'package:provider/provider.dart';
 

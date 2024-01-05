@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
-import 'package:genesis_flutter/Screens/NavScreen/AidPage.dart';
-import 'package:genesis_flutter/Screens/NavScreen/CommunityPage.dart';
-import 'package:genesis_flutter/Screens/NavScreen/HomePage.dart';
-import 'package:genesis_flutter/Screens/NavScreen/ProfilePage.dart';
+import 'package:genesis_flutter/NavScreen/AidPage.dart';
+import 'package:genesis_flutter/NavScreen/CommunityPage.dart';
+import 'package:genesis_flutter/NavScreen/HomePage.dart';
+import 'package:genesis_flutter/NavScreen/ProfilePage.dart';
 
 
 Color cardColor = const Color(0xFF514B6F);

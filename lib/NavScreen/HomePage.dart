@@ -1,8 +1,6 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:genesis_flutter/Screens/BreastFeedingTracker/breast_feeding_tracker.dart';
-import 'package:genesis_flutter/Screens/MedicineTracker/AddMedicineScreen.dart';
+import '../trackers/BreastFeedingTracker/breast_feeding_tracker.dart';
+import 'package:genesis_flutter/trackers/MedicineTracker/AddMedicineScreen.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

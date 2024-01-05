@@ -3,14 +3,14 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:genesis_flutter/Medicine.dart';
-import 'package:genesis_flutter/Screens/NavScreen/HomePage.dart';
+import 'package:genesis_flutter/trackers/MedicineTracker/Medicine.dart';
+import 'package:genesis_flutter/NavScreen/HomePage.dart';
 import 'package:genesis_flutter/common/convert_time.dart';
 import 'package:genesis_flutter/common/new_entery.dart';
 import 'package:genesis_flutter/global_bloc.dart';
 import 'package:genesis_flutter/model/error.dart';
 import 'package:genesis_flutter/model/medicine_type.dart';
-import 'package:genesis_flutter/Screens/MedicineTracker/SuccessfulMedAddScreen.dart';
+import 'package:genesis_flutter/trackers/MedicineTracker/SuccessfulMedAddScreen.dart';
 import 'package:provider/provider.dart';
 
 

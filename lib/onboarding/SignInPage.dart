@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:genesis_flutter/Screens/CreateProfile.dart';
-import 'package:genesis_flutter/Screens/NavScreen/BaseScreen.dart';
-import 'package:genesis_flutter/Screens/SplashScreen.dart';
+import 'package:genesis_flutter/onboarding/CreateProfile.dart';
+import 'package:genesis_flutter/NavScreen/BaseScreen.dart';
+import 'package:genesis_flutter/onboarding/SplashScreen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:genesis_flutter/Screens/Auth.dart';
+import 'package:genesis_flutter/onboarding/Auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 

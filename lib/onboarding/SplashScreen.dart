@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:genesis_flutter/Screens/CreateProfile.dart';
-import 'package:genesis_flutter/Screens/NavScreen/BaseScreen.dart';
-import 'package:genesis_flutter/Screens/SignInPage.dart';
+import 'package:genesis_flutter/onboarding/CreateProfile.dart';
+import 'package:genesis_flutter/NavScreen/BaseScreen.dart';
+import 'package:genesis_flutter/onboarding/SignInPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
