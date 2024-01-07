@@ -1,12 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:genesis_flutter/NavScreen/BaseScreen.dart';
-import 'package:genesis_flutter/onboarding/SplashScreen.dart';
+import 'package:genesis_flutter/appointments/DoctorList.dart';
 import 'package:genesis_flutter/global_bloc.dart';
 import 'package:provider/provider.dart';
-
-
-
 
 Color purple = const Color(0xFF514B6F);
 Color textCol = const Color(0xFF393451);
@@ -72,7 +69,7 @@ class _MyAppState extends State<MyApp>{
                   entryModeIconColor: myTealColor,
                   dialBackgroundColor: pinkColor,
                 )),
-            home: const SplashScreen(),
+            home: const DoctorList(),
             routes: {
               '/home': (context) => const BaseScreen(),
             },

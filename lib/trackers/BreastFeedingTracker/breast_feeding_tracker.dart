@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'dart:async' show Timer;
 import 'package:flutter/material.dart';
 
 class Record {
@@ -167,6 +167,13 @@ class _BreastFeedingScreenState extends State<BreastFeedingScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+   _timer1 = Timer.periodic(const Duration(seconds: 0), (timer) {
+    print("");
+   });
+   _timer2 = Timer.periodic(const Duration(seconds: 1), (timer) {
+    print("");
+   });
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.purple,
