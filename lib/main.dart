@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:genesis_flutter/NavScreen/BaseScreen.dart';
 import 'package:genesis_flutter/onboarding/SplashScreen.dart';
 import 'package:genesis_flutter/global_bloc.dart';
+import 'package:genesis_flutter/trackers/YogaTracker/YogaTypesUI/yoga_tipes.dart';
 import 'package:provider/provider.dart';
 
 
@@ -72,7 +73,7 @@ class _MyAppState extends State<MyApp>{
                   entryModeIconColor: myTealColor,
                   dialBackgroundColor: pinkColor,
                 )),
-            home: const SplashScreen(),
+            home: SplashScreen(),//const SplashScreen(),
             routes: {
               '/home': (context) => const BaseScreen(),
             },

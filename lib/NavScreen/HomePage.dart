@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:genesis_flutter/trackers/YogaTracker/YogaPoseDetection/Views/PoseDetectorView.dart';
+import 'package:genesis_flutter/trackers/YogaTracker/YogaTypesUI/yoga_tipes.dart';
 import '../trackers/BreastFeedingTracker/breast_feeding_tracker.dart';
 import 'package:genesis_flutter/trackers/MedicineTracker/AddMedicineScreen.dart';
 
@@ -21,12 +23,23 @@ class HomePage extends StatelessWidget {
         MaterialPageRoute(builder: (_) => const AddMedicineScreen()))
                 },
                 child: const Text('Medicine Tracker')),
+
+
              ElevatedButton(
                 onPressed:() => {
                    Navigator.of(context).push(
         MaterialPageRoute(builder: (_) => const BreastFeedingScreen()))
                 },
                 child: const Text('Breast Feeding Tracker')),
+
+            ElevatedButton(
+                onPressed:() => {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const YogaTypes()))
+                },
+                child: const Text('Yoga Tracker')),
+
+
             const Text(
               'HomePage',
               style: TextStyle(fontSize: 24),
