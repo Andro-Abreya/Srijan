@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:genesis_flutter/appointments/SelectDetails.dart';
+import 'package:genesis_flutter/chatbot/Chatbot.dart';
 import '../trackers/BreastFeedingTracker/breast_feeding_tracker.dart';
 import 'package:genesis_flutter/trackers/MedicineTracker/AddMedicineScreen.dart';
 
@@ -21,6 +23,19 @@ class HomePage extends StatelessWidget {
         MaterialPageRoute(builder: (_) => const AddMedicineScreen()))
                 },
                 child: const Text('Medicine Tracker')),
+             ElevatedButton(
+                onPressed:() => {
+                   Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => const SelectDetails()))
+                },
+                child: const Text('Book an Appointment')),
+             ElevatedButton(
+                onPressed:() => {
+                   Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => const ChatBot()))
+                },
+                child: const Text('ChatBot')),
+             
              ElevatedButton(
                 onPressed:() => {
                    Navigator.of(context).push(

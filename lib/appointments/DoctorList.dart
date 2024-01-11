@@ -1,4 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:awesome_dialog/awesome_dialog.dart';
 
 class Doctors {
   final String name;
@@ -12,6 +16,12 @@ class Doctors {
     required this.rate,
     required this.imageUrl,
   });
+
+   Doctors.fromFirestore(Map<String, dynamic> data)
+      : name = data['name'],
+        qualification = data['left'],
+        imageUrl = data['time'],
+        rate = data['right'];
 }
 
 class DoctorList extends StatefulWidget {
@@ -85,6 +95,28 @@ class _DoctorListState extends State<DoctorList> {
     Colors.orange[100],
   ];
 
+ Future<List<Doctors>> getData() async {
+    try {
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+      FirebaseAuth mAuth = FirebaseAuth.instance;
+
+      List<Doctors> items = [];
+      CollectionReference usersRef = firestore
+          .collection('Users');
+
+      QuerySnapshot querySnapshot = await usersRef.get();
+
+      for (var doc in querySnapshot.docs) {
+        Doctors item = Doctors.fromFirestore(doc.data() as Map<String, dynamic>);
+        items.add(item);
+      }
+      // print(items);
+      return items;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,105 +145,186 @@ class _DoctorListState extends State<DoctorList> {
             SizedBox(
               height: 12,
             ),
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const BouncingScrollPhysics(),
-              itemCount: doctors.length,
-              itemBuilder: (context, index) {
-                final name = doctors[index].name;
-                final color = colors[(index % 7)];
-                final style = (name.contains('CEO')
-                    ? const TextStyle(fontWeight: FontWeight.bold)
-                    : null);
-                return Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  color: color,
-                  child: InkWell(
-                    onTap: () => {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (context) => Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text('This is a Bottom Sheet'),
-                              ElevatedButton(
-                                onPressed: () => {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return GiffyDialog.image(
-                                        Image.network(
-                                          "https://raw.githubusercontent.com/Shashank02051997/FancyGifDialog-Android/master/GIF's/gif14.gif",
-                                          height: 200,
-                                          fit: BoxFit.cover,
-                                        ),
-                                        title: Text(
-                                          'Image Animation',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        content: Text(
-                                          'This is a image animation dialog box. This library helps you easily create fancy giffy dialog.',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                context, 'CANCEL'),
-                                            child: const Text('CANCEL'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () =>
-                                                Navigator.pop(context, 'OK'),
-                                            child: const Text('OK'),
-                                          ),
+            FutureBuilder<List<Doctors>>(
+              future: getData(),
+              builder: (context,snapshot) {
+                if(snapshot.hasData){
+                return ListView.separated(
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: doctors.length,
+                  itemBuilder: (context, index) {
+                    final name = doctors[index].name;
+                    final color = colors[(index % 7)];
+                    final style = (name.contains('CEO')
+                        ? const TextStyle(fontWeight: FontWeight.bold)
+                        : null);
+                    return Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      color: color,
+                      child: InkWell(
+                        onTap: () => {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) => Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Container(
+                                width: (MediaQuery.of(context).size.width - 20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                   Row(
+                                     children: [
+                                       Container(
+                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(70)),
+                                        width: 70,
+                                        height: 70,
+                                        child: Image.network(doctors[index].imageUrl)),
+                                        SizedBox(width: 20,),
+                                       Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(doctors[index].name,style: TextStyle(fontWeight: FontWeight.w600,fontSize: 20),),
+                                          Text('${doctors[index].qualification}',style: TextStyle(fontWeight: FontWeight.w600,fontSize:18)),
+                                          Text('₹ ${doctors[index].rate}/session',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18)),
                                         ],
-                                      );
-                                    },
-                                  )
-                                },
-                                child: Text('Confirm'),
+                                       )
+                                     ],
+                                   ),
+                                   SizedBox(height: 20,),
+                                    InkWell(
+                                      onTap: () => {
+                                        _showMyDialog(context)
+                                      },
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        padding: EdgeInsets.all(12),
+                                        decoration: BoxDecoration(color: Colors.purple[700],borderRadius: BorderRadius.circular(12)),
+                                        width: MediaQuery.of(context).size.width,
+                                        child: Text('Confirm',style: TextStyle(color: Colors.white),)),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ],
+                            ),
+                          ),
+                        },
+                        child: ListTile(
+                          leading: Image.network(doctors[index].imageUrl),
+                          textColor: Colors.black,
+                          subtitle: Text(
+                              'Qualification: ${doctors[index].qualification} '),
+                          title: Text(
+                            name,
+                            style: style ?? const TextStyle(fontSize: 18.0),
                           ),
                         ),
                       ),
-                    },
-                    child: ListTile(
-                      leading: Image.network(doctors[index].imageUrl),
-                      textColor: Colors.black,
-                      subtitle: Text(
-                          'Qualification: ${doctors[index].qualification} '),
-                      title: Text(
-                        name,
-                        style: style ?? const TextStyle(fontSize: 18.0),
-                      ),
-                    ),
-                  ),
+                    );
+                  },
+                  separatorBuilder: (context, index) => const SizedBox(height: 3),
                 );
-              },
-              separatorBuilder: (context, index) => const SizedBox(height: 3),
+              }else if(snapshot.hasError){
+                return Center(child: Text('Error Loading Data'));
+              }else{
+                return Center(child: CircularProgressIndicator());
+              }
+              }
             ),
           ],
         ),
       ),
     );
   }
+  Future<void> _showMyDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          elevation: 0.0,
+          backgroundColor: Colors.transparent,
+          child: contentBox(context),
+        );
+      },
+    );
+  }
 
-  // void showCustomDialog() {
-  //   AwesomeDialog(
-  //     context: context,
-  //     dialogType: DialogType.INFO,
-  //     animType: AnimType.BOTTOMSLIDE,
-  //     title: 'Awesome Dialog',
-  //     desc: 'This is a custom dialog with two buttons.',
-  //     btnCancelOnPress: () {},
-  //     btnCancelText: 'Cancel',
-  //     btnOkOnPress: () {},
-  //     btnOkText: 'OK',
-  //   )..show();
-  // }
+  Widget contentBox(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        color: Colors.white,
+      ),
+      child: Container(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              height: 120,
+              width: 120,
+              child: Lottie.asset(
+                      'assets/animation/caution.json', // Replace with your animation file path
+                      width: 300,
+                      height: 300,
+                      fit: BoxFit.cover,
+                    ),
+            ),
+            Text(
+              'Book Appountment',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Are you sure you want to continue ?',
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                    // Add your action here for the first button
+                  },
+                  child: Text(
+                    'Cancel',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                    // Add your action here for the second button
+                  },
+                  child: Text(
+                    'Confirm',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

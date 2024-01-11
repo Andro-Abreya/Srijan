@@ -2,7 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:genesis_flutter/NavScreen/BaseScreen.dart';
 import 'package:genesis_flutter/appointments/DoctorList.dart';
+import 'package:genesis_flutter/appointments/SelectDetails.dart';
+import 'package:genesis_flutter/chatbot/Chatbot.dart';
 import 'package:genesis_flutter/global_bloc.dart';
+import 'package:genesis_flutter/onboarding/SplashScreen.dart';
 import 'package:provider/provider.dart';
 
 Color purple = const Color(0xFF514B6F);
@@ -46,6 +49,10 @@ class _MyAppState extends State<MyApp>{
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
             theme: ThemeData(
+              primaryColor: darkPink,
+              buttonTheme: ButtonThemeData(
+                buttonColor: darkPink
+              ),
                 colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
                 useMaterial3: true,
                 appBarTheme: const AppBarTheme(
@@ -69,12 +76,11 @@ class _MyAppState extends State<MyApp>{
                   entryModeIconColor: myTealColor,
                   dialBackgroundColor: pinkColor,
                 )),
-            home: const DoctorList(),
+            home: const SplashScreen(),
             routes: {
               '/home': (context) => const BaseScreen(),
             },
           ),
         );
-
   }
 }

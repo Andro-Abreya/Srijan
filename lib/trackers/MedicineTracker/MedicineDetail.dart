@@ -298,10 +298,9 @@ class _MedicineDetailsState extends State<MedicineDetails> {
     var initialisationSettingsIOS = const DarwinInitializationSettings();
     var initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid, iOS: initialisationSettingsIOS);
-
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
-
+  
   Future onSelectNotification(String? payload) async{
     if(payload !=null){
       debugPrint('notification payload: $payload');
