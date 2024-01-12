@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:genesis_flutter/CommunityReq/helper_function.dart';
 import 'package:genesis_flutter/onboarding/CreateProfile.dart';
 import 'package:genesis_flutter/NavScreen/BaseScreen.dart';
 import 'package:genesis_flutter/onboarding/SplashScreen.dart';
@@ -18,6 +20,36 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage>{
+
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  @override
+  // void initState() {
+  //   super.initState();
+  //   _checkAuthStatus();
+  // }
+
+  void _checkAuthStatus() async {
+    User? user = _auth.currentUser;
+
+    if (user != null) {
+      await _checkUserProfile(user.uid);
+    } else {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> const SignInPage()));
+    }
+  }
+
+  Future<void> _checkUserProfile(String uid) async {
+    DocumentSnapshot userDoc = await _firestore.collection('Users').doc(uid).get();
+
+    if (userDoc.exists) {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> const BaseScreen()));
+    } else {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> const CreateProfileScreen()));
+    }
+  }
   @override
   Widget build(BuildContext context) {
     final AuthMethods authMethods = AuthMethods();
@@ -56,6 +88,7 @@ class _SignInPageState extends State<SignInPage>{
                   ),
                   child: GestureDetector(
                     onTap: () async {
+
                       await googleSignIn.signOut();
                       //await _googleSignIn.disconnect();
                       //authService.handleSignOut();
@@ -139,24 +172,39 @@ class _SignInPageState extends State<SignInPage>{
 
 
   void navigateFromSignIn() async{
+    // final user = FirebaseAuth.instance.currentUser;
+    // final userName = user?.displayName;
+    // await HelperFunctions.saveUserNameSF(userName!);
 
-    var sharedPref = await  SharedPreferences.getInstance();
-    var isProfCreated =  sharedPref.getBool(SplashScreenState.KEYPROF);
+    _checkAuthStatus();
 
-    if(isProfCreated != null){
+    // var sharedPref = await  SharedPreferences.getInstance();
+    // //var isProfCreatedwithUid =  sharedPref.getString(SplashScreenState.KEYPROF);
+    // final user = FirebaseAuth.instance.currentUser;
+    // final uid =user?.uid;
+    //
+    // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> const CreateProfileScreen()));
 
-      if(isProfCreated){
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> const BaseScreen()));
-      }else{
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> const CreateProfileScreen()));
-      }
 
-    }else{
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> const CreateProfileScreen()));
-    }
+
+
+
+
+
+
+    //
+    // if(uid != isProfCreatedwithUid){
+    //   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> const CreateProfileScreen()));
+    //   // if(isProfCreated){
+    //   //   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> const BaseScreen()));
+    //   // }else{
+    //   //   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> const CreateProfileScreen()));
+    //   // }
+    //
+    // }else{
+    //   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> const  BaseScreen()));
+    // }
   }
-
-
 
 }
 
