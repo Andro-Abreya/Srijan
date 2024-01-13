@@ -49,11 +49,11 @@ class _MyAppState extends State<MyApp>{
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
             theme: ThemeData(
-              primaryColor: darkPink,
-              buttonTheme: ButtonThemeData(
-                buttonColor: darkPink
-              ),
-                colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              // primaryColor: darkPink,
+              // buttonTheme: ButtonThemeData(
+              //   buttonColor: darkPink
+              // ),
+                // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
                 useMaterial3: true,
                 appBarTheme: const AppBarTheme(
                   color: Colors.white,

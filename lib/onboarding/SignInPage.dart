@@ -66,7 +66,6 @@ class _SignInPageState extends State<SignInPage>{
                       sharedPref.setString(SplashScreenState.KEYSIGNIN, (user?.uid).toString() );
                       navigateFromSignIn();
                     },
-
                     child: Column(
                       children: [
                         const SizedBox(height: 130),
@@ -76,7 +75,6 @@ class _SignInPageState extends State<SignInPage>{
                           Image.asset(
                             'assets/images/mother_preg_login.png',
                             width: 500,
-
                           ),),
                         Text(
                           "Healthy Mama's Child",

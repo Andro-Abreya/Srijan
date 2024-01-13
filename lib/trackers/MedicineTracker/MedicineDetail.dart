@@ -46,7 +46,7 @@ class _MedicineDetailsState extends State<MedicineDetails> {
     medNameController = TextEditingController();
     dosageController = TextEditingController();
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    initialisedNotifications();
+    //initialisedNotifications();
     _newEntryBloc = NewEntryBloc();
     initialiseErrorListen();
   }
@@ -293,13 +293,13 @@ class _MedicineDetailsState extends State<MedicineDetails> {
       return ids;
   }
 
-  initialisedNotifications() async {
-    var initializationSettingsAndroid = const AndroidInitializationSettings('@mipmap/launcher_icon');
-    var initialisationSettingsIOS = const DarwinInitializationSettings();
-    var initializationSettings = InitializationSettings(
-      android: initializationSettingsAndroid, iOS: initialisationSettingsIOS);
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-  }
+  // initialisedNotifications() async {
+  //   var initializationSettingsAndroid = const AndroidInitializationSettings('@mipmap/launcher_icon');
+  //   var initialisationSettingsIOS = const DarwinInitializationSettings();
+  //   var initializationSettings = InitializationSettings(
+  //     android: initializationSettingsAndroid, iOS: initialisationSettingsIOS);
+  //   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  // }
   
   Future onSelectNotification(String? payload) async{
     if(payload !=null){
