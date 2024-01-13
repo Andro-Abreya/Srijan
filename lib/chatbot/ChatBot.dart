@@ -14,6 +14,7 @@ class _ChatBotState extends State<ChatBot> {
   final TextEditingController _messageController = TextEditingController();
   final List<ChatMessage> _messages = [];
   final FirebaseAuth mAuth = FirebaseAuth.instance;
+  final ScrollController _scrollController = ScrollController();
 
   Future<void> fetchData() async {
     final response = await http.get(Uri.parse(
@@ -28,7 +29,7 @@ class _ChatBotState extends State<ChatBot> {
           isMe: false,
         ));
       });
-
+      _scrollToEnd();
       // Process the received data
     } else {
       // Handle error
@@ -41,12 +42,15 @@ class _ChatBotState extends State<ChatBot> {
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
+    if (_messages.isEmpty) {
+      setState(() {
         _messages.add(ChatMessage(
           text: 'How may I help you Mama...?',
           isMe: false,
         ));
       });
+    }
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
@@ -60,6 +64,7 @@ class _ChatBotState extends State<ChatBot> {
         children: [
           Expanded(
             child: ListView.builder(
+              controller: _scrollController,
               itemCount: _messages.length,
               itemBuilder: (context, index) {
                 return _messages[index];
@@ -87,17 +92,21 @@ class _ChatBotState extends State<ChatBot> {
         children: [
           Expanded(
             child: TextField(
-              style: TextStyle(color: Colors.white,fontWeight: FontWeight.w400),
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.w400),
               controller: _messageController,
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
-                hintText: 'Type a message...',
-                hintStyle: TextStyle(color: Colors.white,fontWeight: FontWeight.w300)
-              ),
+                  hintText: 'Type a message...',
+                  hintStyle: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w300)),
             ),
           ),
           IconButton(
-            icon: Icon(Icons.send,color: Colors.white,),
+            icon: Icon(
+              Icons.send,
+              color: Colors.white,
+            ),
             onPressed: () {
               _sendMessage();
             },
@@ -125,6 +134,17 @@ class _ChatBotState extends State<ChatBot> {
       });
     }
   }
+
+  void _scrollToEnd() {
+    setState(() {
+      _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 10),
+      curve: Curves.easeOut,
+    );
+    });
+    
+  }
 }
 
 class ChatMessage extends StatelessWidget {
@@ -136,124 +156,125 @@ class ChatMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
+      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2),
       padding: EdgeInsets.all(8.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment:
             isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-        children:isMe ?[
-         
-          ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width * 0.65,
-              minWidth: MediaQuery.of(context).size.width * 0.3,
-            ),
-            child: Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                  color: isMe
-                      ? Color.fromARGB(134, 212, 45, 109)
-                      : Color.fromARGB(255, 161, 185, 203),
-                  borderRadius: BorderRadius.circular(8)),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    softWrap: true,
-                    isMe ? 'You' : 'Bloom Bot',
-                    style: TextStyle(
-                      // backgroundColor: Colors.white38,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+        children: isMe
+            ? [
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width * 0.65,
+                    minWidth: MediaQuery.of(context).size.width * 0.3,
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        color: isMe
+                            ? Color.fromARGB(134, 212, 45, 109)
+                            : Color.fromARGB(255, 161, 185, 203),
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          softWrap: true,
+                          isMe ? 'You' : 'Bloom Bot',
+                          style: TextStyle(
+                            // backgroundColor: Colors.white38,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Container(
+                          // padding: EdgeInsets.all(4),
+                          margin: EdgeInsets.only(top: 5.0),
+                          // decoration: BoxDecoration(
+                          //     color: isMe
+                          //         ? Color.fromARGB(134, 212, 45, 109)
+                          //         : Color.fromARGB(255, 121, 158, 187),
+                          //     borderRadius: BorderRadius.circular(5)),
+                          child: Text(
+                            text,
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  Container(
-                    // padding: EdgeInsets.all(4),
-                    margin: EdgeInsets.only(top: 5.0),
-                    // decoration: BoxDecoration(
-                    //     color: isMe
-                    //         ? Color.fromARGB(134, 212, 45, 109)
-                    //         : Color.fromARGB(255, 121, 158, 187),
-                    //     borderRadius: BorderRadius.circular(5)),
-                    child: Text(
-                      text,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Container(
+                    width: 35,
+                    height: 35,
+                    child: Image.asset('assets/images/woman.png')),
+              ]
+            : [
+                Container(
+                    width: 35,
+                    height: 35,
+                    padding: EdgeInsets.all(1),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(36),
+                        color: Color.fromARGB(224, 255, 193, 7)),
+                    child: Image.asset('assets/images/bot.png')),
+                SizedBox(
+                  width: 5,
+                ),
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width * 0.65,
+                    minWidth: MediaQuery.of(context).size.width * 0.3,
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        color: isMe
+                            ? Color.fromARGB(134, 212, 45, 109)
+                            : Color.fromARGB(255, 161, 185, 203),
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          softWrap: true,
+                          isMe ? 'You' : 'Bloom Bot',
+                          style: TextStyle(
+                            // backgroundColor: Colors.white38,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Container(
+                          // padding: EdgeInsets.all(4),
+                          margin: EdgeInsets.only(top: 5.0),
+                          // decoration: BoxDecoration(
+                          //     color: isMe
+                          //         ? Color.fromARGB(134, 212, 45, 109)
+                          //         : Color.fromARGB(255, 121, 158, 187),
+                          //     borderRadius: BorderRadius.circular(5)),
+                          child: Text(
+                            text,
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 5,
-          ),
-        Container(
-            width: 35,
-            height:35,
-           
-            child: Image.asset('assets/images/woman.png')),
-        ]:[
-           Container(
-            width: 35,
-            height:35,
-             padding: EdgeInsets.all(1),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(36), color: Color.fromARGB(224, 255, 193, 7)),
-            child: Image.asset('assets/images/bot.png')),
-          SizedBox(
-            width: 5,
-          ),
-          ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width * 0.65,
-              minWidth: MediaQuery.of(context).size.width * 0.3,
-            ),
-            child: Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                  color: isMe
-                      ? Color.fromARGB(134, 212, 45, 109)
-                      : Color.fromARGB(255, 161, 185, 203),
-                  borderRadius: BorderRadius.circular(8)),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    softWrap: true,
-                    isMe ? 'You' : 'Bloom Bot',
-                    style: TextStyle(
-                      // backgroundColor: Colors.white38,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Container(
-                    // padding: EdgeInsets.all(4),
-                    margin: EdgeInsets.only(top: 5.0),
-                    // decoration: BoxDecoration(
-                    //     color: isMe
-                    //         ? Color.fromARGB(134, 212, 45, 109)
-                    //         : Color.fromARGB(255, 121, 158, 187),
-                    //     borderRadius: BorderRadius.circular(5)),
-                    child: Text(
-                      text,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        
-        ],
+                ),
+              ],
       ),
     );
   }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:genesis_flutter/appointments/SelectDetails.dart';
+import 'package:genesis_flutter/chatbot/ChatBot.dart';
 import 'package:genesis_flutter/trackers/YogaTracker/YogaPoseDetection/Views/PoseDetectorView.dart';
 import 'package:genesis_flutter/trackers/YogaTracker/YogaTypesUI/yoga_tipes.dart';
 import '../trackers/BreastFeedingTracker/breast_feeding_tracker.dart';
@@ -38,6 +40,20 @@ class HomePage extends StatelessWidget {
                       MaterialPageRoute(builder: (_) => const YogaTypes()))
                 },
                 child: const Text('Yoga Tracker')),
+
+            ElevatedButton(
+                onPressed:() => {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const SelectDetails()))
+                },
+                child: const Text('Doctor Appointment')),
+            ElevatedButton(
+                onPressed:() => {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const ChatBot()))
+                },
+                child: const Text('Chat Bot')),
+
 
 
             const Text(
