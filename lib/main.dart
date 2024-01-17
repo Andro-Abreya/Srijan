@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:genesis_flutter/NavScreen/AidPage.dart';
 import 'package:genesis_flutter/NavScreen/BaseScreen.dart';
 import 'package:genesis_flutter/onboarding/CreateProfile.dart';
 import 'package:genesis_flutter/onboarding/SplashScreen.dart';
@@ -74,7 +75,7 @@ class _MyAppState extends State<MyApp>{
                   entryModeIconColor: myTealColor,
                   dialBackgroundColor: pinkColor,
                 )),
-            home: SplashScreen(),//const SplashScreen(),
+            home:  const SplashScreen(),//const SplashScreen(),
             routes: {
               '/home': (context) => const BaseScreen(),
             },
