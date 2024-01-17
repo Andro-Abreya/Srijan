@@ -5,6 +5,7 @@ class HelperFunctions {
   static String userLoggedInKey = "LOGGEDINKEY";
   static String userNameKey = "USERNAMEKEY";
   static String userEmailKey = "USEREMAILKEY";
+  static  String joinDateKey = 'JOINDATEKEY';
 
   // saving the data to SF
 
@@ -38,5 +39,23 @@ class HelperFunctions {
   static Future<String?> getUserNameFromSF() async {
     SharedPreferences sf = await SharedPreferences.getInstance();
     return sf.getString(userNameKey);
+  }
+
+
+
+
+  static Future<void> saveJoinDate(DateTime joinDate) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(joinDateKey, joinDate.toIso8601String());
+  }
+
+  static Future<DateTime?> getJoinDate() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? joinDateString = prefs.getString(joinDateKey);
+    if (joinDateString != null) {
+      return DateTime.parse(joinDateString);
+    } else {
+      return null;
+    }
   }
 }

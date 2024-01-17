@@ -19,7 +19,7 @@ class _MyAppState extends State<BaseScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _fragments = [
-    const HomePage(),
+    const HomePage(initialWeek: 8),
     const CommunityPage(),
     const AidPage(),
     const ProfilePage(),

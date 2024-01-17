@@ -41,6 +41,13 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
   int pregnancyMonth = 0;
   int childAge = 0;
   bool profileCreated = false;
+  late DateTime joinDate;
+
+  @override
+  void initState() {
+    super.initState();
+    joinDate = DateTime.now();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -239,7 +246,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       children: [
                         const SizedBox(height: 16.0),
                         const Text(
-                          'Enter Pregnancy Month:',
+                          'Enter Pregnancy week:',
                            style: TextStyle(
                              color: Color(0xFF393451),
                              fontWeight: FontWeight.bold,
@@ -269,8 +276,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                             },
                             validator: (value) {
                               int? intPregnancyMonth = int.tryParse(value!);
-                              if (intPregnancyMonth == null || intPregnancyMonth < 1 || intPregnancyMonth > 9) {
-                                return 'Please enter a valid pregnancy month between 1 and 9';
+                              if (intPregnancyMonth == null || intPregnancyMonth < 1 || intPregnancyMonth > 40) {
+                                return 'Please enter a valid pregnancy week between 1 and 40';
                               }
                               return null;
                             },
@@ -357,6 +364,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                 final user = FirebaseAuth.instance.currentUser;
                 final uid =user?.uid;
                 sharedPref.setBool(SplashScreenState.KEYPROF,true);
+                await HelperFunctions.saveJoinDate(joinDate);
                 await HelperFunctions.saveUserEmailSF(user!.email.toString());
                 await HelperFunctions.saveUserNameSF(name);
                 //print(user?.email.toString());

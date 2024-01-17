@@ -308,7 +308,7 @@ class _MedicineDetailsState extends State<MedicineDetails> {
     }
     await Navigator.push(
         context,MaterialPageRoute(
-        builder:(context)=> const HomePage()) );
+        builder:(context)=> const HomePage(initialWeek: 8,)) );
   }
 
   Future<void > scheduleNotification(Medicine medicine) async{
