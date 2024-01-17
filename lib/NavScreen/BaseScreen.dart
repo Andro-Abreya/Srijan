@@ -22,7 +22,7 @@ class _MyAppState extends State<BaseScreen> {
     const HomePage(initialWeek: 8),
     const CommunityPage(),
     const AidPage(),
-    const ProfilePage(),
+     ProfilePage(),
   ];
 
   @override
