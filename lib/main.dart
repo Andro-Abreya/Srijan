@@ -1,14 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:genesis_flutter/NavScreen/BaseScreen.dart';
+import 'package:genesis_flutter/map/MapPage.dart';
 import 'package:genesis_flutter/onboarding/CreateProfile.dart';
 import 'package:genesis_flutter/onboarding/SplashScreen.dart';
 import 'package:genesis_flutter/global_bloc.dart';
 import 'package:genesis_flutter/trackers/YogaTracker/YogaTypesUI/yoga_tipes.dart';
 import 'package:provider/provider.dart';
-
-
-
 
 Color purple = const Color(0xFF514B6F);
 Color textCol = const Color(0xFF393451);
@@ -44,7 +42,6 @@ class _MyAppState extends State<MyApp>{
 
   @override
   Widget build(BuildContext context) {
-
         return Provider<GlobalBloc>.value(
             value: globalBloc!,
           child: MaterialApp(
@@ -74,12 +71,11 @@ class _MyAppState extends State<MyApp>{
                   entryModeIconColor: myTealColor,
                   dialBackgroundColor: pinkColor,
                 )),
-            home: SplashScreen(),//const SplashScreen(),
+            home: const SplashScreen(),
             routes: {
               '/home': (context) => const BaseScreen(),
             },
           ),
         );
-
   }
 }
