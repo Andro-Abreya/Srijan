@@ -8,9 +8,11 @@ class ChatBot extends StatefulWidget {
 
   @override
   State<ChatBot> createState() => _ChatBotState();
+
 }
 
 class _ChatBotState extends State<ChatBot> {
+  
   final TextEditingController _messageController = TextEditingController();
   final List<ChatMessage> _messages = [];
   final FirebaseAuth mAuth = FirebaseAuth.instance;

@@ -57,8 +57,8 @@ class _MapPageState extends State<MapPage> {
     return Scaffold(
       body:_currentPosition != "Unknown"? FlutterMap(
     options:  MapOptions(
-      initialCenter: LatLng(_Lat, _Long),
-      initialZoom: 13.0,
+      center: LatLng(_Lat, _Long),
+      zoom: 13.0,
     ),
     children: [
       TileLayer(

@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:genesis_flutter/NavScreen/AidPage.dart';
 import 'package:genesis_flutter/NavScreen/BaseScreen.dart';
+import 'package:genesis_flutter/chatbot/ChatScreen.dart';
+import 'package:genesis_flutter/news/NewsScreen.dart';
 import 'package:genesis_flutter/onboarding/CreateProfile.dart';
 import 'package:genesis_flutter/onboarding/SplashScreen.dart';
 import 'package:genesis_flutter/global_bloc.dart';
@@ -42,7 +44,6 @@ class _MyAppState extends State<MyApp>{
     globalBloc = GlobalBloc();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
 
@@ -75,9 +76,9 @@ class _MyAppState extends State<MyApp>{
                   entryModeIconColor: myTealColor,
                   dialBackgroundColor: pinkColor,
                 )),
-            home:  const SplashScreen(),//const SplashScreen(),
+            home:  NewsScreen(),//const SplashScreen(),
             routes: {
-              '/home': (context) => const BaseScreen(),
+              '/home': (context) =>  const BaseScreen(),
             },
           ),
         );
