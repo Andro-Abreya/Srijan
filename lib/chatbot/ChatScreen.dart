@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:dialog_flowtter/dialog_flowtter.dart';
 import 'package:genesis_flutter/chatbot/Messages.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({Key? key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _ChatScreenState createState() => _ChatScreenState();
 }
 
-class _HomeState extends State<Home> {
+class _ChatScreenState extends State<ChatScreen> {
   late DialogFlowtter dialogFlowtter;
   final TextEditingController _controller = TextEditingController();
 

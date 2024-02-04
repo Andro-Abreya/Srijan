@@ -29,44 +29,48 @@ class _MessagesScreenState extends State<MessagesScreen> {
                   children: widget.messages[index]['isUserMessage']
                       ? [
                           
-                          Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 14, horizontal: 14),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(
-                                      20,
-                                    ),
-                                    topRight: Radius.circular(20),
-                                    bottomRight: Radius.circular(
+                          Column(
+                            children: [
+                              Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 14, horizontal: 14),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(
+                                          20,
+                                        ),
+                                        topRight: Radius.circular(20),
+                                        bottomRight: Radius.circular(
+                                            widget.messages[index]['isUserMessage']
+                                                ? 0
+                                                : 20),
+                                        bottomLeft: Radius.circular(
+                                            widget.messages[index]['isUserMessage']
+                                                ? 20
+                                                : 0),
+                                      ),
+                                      color: widget.messages[index]['isUserMessage']
+                                          ? const Color.fromARGB(255, 246, 167, 167)
+                                          : Colors.grey.withOpacity(0.8)),
+                                  constraints: BoxConstraints(
+                                      maxWidth: w * 2 / 3, minWidth: w * 1 / 5),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
                                         widget.messages[index]['isUserMessage']
-                                            ? 0
-                                            : 20),
-                                    bottomLeft: Radius.circular(
-                                        widget.messages[index]['isUserMessage']
-                                            ? 20
-                                            : 0),
-                                  ),
-                                  color: widget.messages[index]['isUserMessage']
-                                      ? const Color.fromARGB(255, 246, 167, 167)
-                                      : Colors.grey.withOpacity(0.8)),
-                              constraints: BoxConstraints(
-                                  maxWidth: w * 2 / 3, minWidth: w * 1 / 5),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    widget.messages[index]['isUserMessage']
-                                        ? 'You'
-                                        : 'Srijan Bot',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(widget
-                                      .messages[index]['message'].text.text[0])
-                                ],
-                              )),
+                                            ? 'You'
+                                            : 'Srijan Bot',
+                                        style:
+                                            TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(widget
+                                          .messages[index]['message'].text.text[0])
+                                    ],
+                                  )),
+                            ],
+                          ),
                               SizedBox(
                             width: 5,
                           ),

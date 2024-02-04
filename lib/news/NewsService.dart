@@ -3,8 +3,8 @@ import 'package:http/http.dart' as http;
 
 class NewsService {
   // final String apiKey;
-  final String baseUrl = 'https://gnews.io/api/v4/search?q=child%20care&lang=en&country=in&max=20&';
-  
+  final String baseUrl = 'https://gnews.io/api/v4/top-headlines?category=health&lang=en&q=baby%20care&';
+
   // NewsService(this.apiKey);
 
   Future<List<Article>> getTopHeadlines() async {
@@ -48,7 +48,7 @@ class Article {
       title: json['title'],
       description: json['description'],
       content: json['content'],
-      url: json['content'],
+      url: json['url'],
       image: json['image'],
       publishedAt: json['description'],
       // source: json['source'],

@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:genesis_flutter/trackers/MedicineTracker/AddMedicineScreen.dart';
+import 'package:genesis_flutter/trackers/MedicineTracker/Medicine.dart';
 import 'package:lottie/lottie.dart';
 
 class SuccessfulMedAddScreen extends StatefulWidget {
@@ -16,7 +18,8 @@ class _SuccessfulMedAddScreenState extends State<SuccessfulMedAddScreen> {
   void initState(){
     super.initState();
     Timer(const Duration(milliseconds: 4000), (){
-      Navigator.popUntil(context, ModalRoute.withName('/'));
+      Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (_) => const AddMedicineScreen()));
     });
   }
   @override

@@ -1,17 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:genesis_flutter/NavScreen/AidPage.dart';
 import 'package:genesis_flutter/NavScreen/BaseScreen.dart';
-import 'package:genesis_flutter/chatbot/ChatScreen.dart';
 import 'package:genesis_flutter/news/NewsScreen.dart';
-import 'package:genesis_flutter/onboarding/CreateProfile.dart';
-import 'package:genesis_flutter/onboarding/SplashScreen.dart';
 import 'package:genesis_flutter/global_bloc.dart';
-import 'package:genesis_flutter/trackers/YogaTracker/YogaTypesUI/yoga_tipes.dart';
+import 'package:genesis_flutter/onboarding/SplashScreen.dart';
 import 'package:provider/provider.dart';
-
-
-
 
 Color purple = const Color(0xFF514B6F);
 Color textCol = const Color(0xFF393451);
@@ -76,9 +69,10 @@ class _MyAppState extends State<MyApp>{
                   entryModeIconColor: myTealColor,
                   dialBackgroundColor: pinkColor,
                 )),
-            home:  NewsScreen(),//const SplashScreen(),
+            home:  const SplashScreen(),
             routes: {
               '/home': (context) =>  const BaseScreen(),
+              '/allmed': (context) =>  const BaseScreen(),
             },
           ),
         );
