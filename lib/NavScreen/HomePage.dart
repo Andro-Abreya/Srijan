@@ -265,6 +265,10 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 20,
               ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                alignment: Alignment.centerLeft,
+                child: Text("Mama's News Feed",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),)),
               FutureBuilder<List<Article>>(
                 future: futureArticles,
                 builder: (context, snapshot) {
