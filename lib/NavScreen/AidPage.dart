@@ -96,8 +96,8 @@ class _AidPageState extends State<AidPage> {
                                               builder: (context) =>
                                                   const MapPage()))
                                     },
-                                    initialCenter: LatLng(_Lat, _Long),
-                                    initialZoom: 14.0,
+                                    center: LatLng(_Lat, _Long),
+                                    zoom: 14.0,
                                   ),
                                   children: [
                                     TileLayer(
