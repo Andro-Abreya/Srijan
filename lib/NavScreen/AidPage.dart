@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:genesis_flutter/appointments/SelectDetails.dart';
-import 'package:genesis_flutter/map/MapPage.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AidPage extends StatefulWidget {
   const AidPage({super.key});
@@ -15,6 +15,14 @@ class AidPage extends StatefulWidget {
 class _AidPageState extends State<AidPage> {
   String _currentPosition = "Unknown";
   double _Lat = 0, _Long = 0;
+
+   _launchURL(url_1) async {
+    final Uri url = Uri.parse('$url_1');
+   // final Uri url = Uri.parse('https://www.google.com/maps/search/hospitals nearby');
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
+    }
+  }
 
   @override
   void initState() {
@@ -74,51 +82,46 @@ class _AidPageState extends State<AidPage> {
                       ],
                       borderRadius: BorderRadius.circular(12)),
                   padding: EdgeInsets.all(5),
-                  child: InkWell(
-                    onTap: () => {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => MapPage()))
-                    },
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.all(5),
-                          height: 200,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20)),
-                          child: _currentPosition != "Unknown"
-                              ? FlutterMap(
-                                  options: MapOptions(
-                                    onTap: (tapPosition, latlng) => {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const MapPage()))
-                                    },
-                                    center: LatLng(_Lat, _Long),
-                                    zoom: 14.0,
-                                  ),
-                                  children: [
-                                    TileLayer(
-                                        urlTemplate:
-                                            "https://api.mapbox.com/styles/v1/abhishekbh349/clrghjplo00jq01p41fyeee0f/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYWJoaXNoZWtiaDM0OSIsImEiOiJjbHJnaGZqdjcwMDNvMmpvYjVmeGEycnN3In0.6C_FtIoblFyI4xHJ5rvRKg",
-                                        additionalOptions: const {
-                                          'accessToken':
-                                              'pk.eyJ1IjoiYWJoaXNoZWtiaDM0OSIsImEiOiJjbHJnaGZqdjcwMDNvMmpvYjVmeGEycnN3In0.6C_FtIoblFyI4xHJ5rvRKg',
-                                          'id': 'mapbox.mapbox-streets-v8',
-                                        }),
-                                  ],
-                                )
-                              : Container(
-                                  color: Colors.grey[300],
-                                  child: const Center(
-                                      child: CircularProgressIndicator(
-                                    color: Colors.blue,
-                                  )),
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.all(5),
+                        height: 200,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: _currentPosition != "Unknown"
+                            ? FlutterMap(
+                                options: MapOptions(
+                                  onTap: (tapPosition, latlng) => {
+                                   _launchURL('https://www.google.com/maps/search/hospitals nearby')
+                                  },
+                                  center: LatLng(_Lat, _Long),
+                                  zoom: 14.0,
                                 ),
-                        ),
-                        Container(
+                                children: [
+                                  TileLayer(
+                                      urlTemplate:
+                                          "https://api.mapbox.com/styles/v1/abhishekbh349/clrghjplo00jq01p41fyeee0f/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYWJoaXNoZWtiaDM0OSIsImEiOiJjbHJnaGZqdjcwMDNvMmpvYjVmeGEycnN3In0.6C_FtIoblFyI4xHJ5rvRKg",
+                                      additionalOptions: const {
+                                        'accessToken':
+                                            'pk.eyJ1IjoiYWJoaXNoZWtiaDM0OSIsImEiOiJjbHJnaGZqdjcwMDNvMmpvYjVmeGEycnN3In0.6C_FtIoblFyI4xHJ5rvRKg',
+                                        'id': 'mapbox.mapbox-streets-v8',
+                                      }),
+                                ],
+                              )
+                            : Container(
+                                color: Colors.grey[300],
+                                child: const Center(
+                                    child: CircularProgressIndicator(
+                                  color: Colors.blue,
+                                )),
+                              ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          _launchURL('https://www.google.com/maps/search/hospitals nearby');
+                        },
+                        child: Container(
                           padding: const EdgeInsets.all(3),
                           margin: const EdgeInsets.symmetric(horizontal: 8),
                           child: const Row(
@@ -135,7 +138,12 @@ class _AidPageState extends State<AidPage> {
                             ],
                           ),
                         ),
-                        Container(
+                      ),
+                      InkWell(
+                        onTap: (){
+                          _launchURL('https://www.google.com/maps/search/pharmacies nearby');
+                        },
+                        child: Container(
                           padding: const EdgeInsets.all(3),
                           margin: const EdgeInsets.symmetric(horizontal: 8),
                           child: const Row(
@@ -153,8 +161,8 @@ class _AidPageState extends State<AidPage> {
                             ],
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   )),
               SizedBox(
                 height: 20,

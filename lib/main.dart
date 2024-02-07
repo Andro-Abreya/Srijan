@@ -15,6 +15,9 @@ Color pink1 = const Color(0xFFFF69B4);
 Color lightPink = const Color(0xFFFF69B4).withOpacity(0.8);
 Color lightPurple = const Color(0xFFB2B2FF).withOpacity(0.8);
 
+
+// AIzaSyC8ZGogQXgo80idNIeDSgU-rjBMLZtx_KQ
+
 Future  main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -76,6 +79,5 @@ class _MyAppState extends State<MyApp>{
             },
           ),
         );
-
   }
 }
