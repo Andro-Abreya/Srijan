@@ -1,7 +1,9 @@
+
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:genesis_flutter/NavScreen/BaseScreen.dart';
-import 'package:genesis_flutter/news/NewsScreen.dart';
+import 'package:genesis_flutter/appointments/button.dart';
 import 'package:genesis_flutter/global_bloc.dart';
 import 'package:genesis_flutter/onboarding/SplashScreen.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +16,6 @@ Color darkPink = const Color(0xFFD34389);
 Color pink1 = const Color(0xFFFF69B4);
 Color lightPink = const Color(0xFFFF69B4).withOpacity(0.8);
 Color lightPurple = const Color(0xFFB2B2FF).withOpacity(0.8);
-
 
 // AIzaSyC8ZGogQXgo80idNIeDSgU-rjBMLZtx_KQ
 
@@ -42,7 +43,6 @@ class _MyAppState extends State<MyApp>{
   }
   @override
   Widget build(BuildContext context) {
-
         return Provider<GlobalBloc>.value(
             value: globalBloc!,
           child: MaterialApp(
@@ -72,7 +72,7 @@ class _MyAppState extends State<MyApp>{
                   entryModeIconColor: myTealColor,
                   dialBackgroundColor: pinkColor,
                 )),
-            home:  const SplashScreen(),
+            home: SplashScreen(),
             routes: {
               '/home': (context) =>  const BaseScreen(),
               '/allmed': (context) =>  const BaseScreen(),
