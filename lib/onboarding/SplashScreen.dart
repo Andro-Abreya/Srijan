@@ -62,12 +62,12 @@ class SplashScreenState extends State<SplashScreen> {
     } else {
 
 
-            Timer(const Duration(seconds: 3), () {
-              Navigator.pushReplacement(
-                context ,
-                MaterialPageRoute(builder: (context) => const SignInPage()),
-              );
-            });
+      Timer(const Duration(seconds: 3), () {
+        Navigator.pushReplacement(
+          context ,
+          MaterialPageRoute(builder: (context) => const SignInPage()),
+        );
+      });
 
       //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> const SignInPage()));
     }
@@ -110,10 +110,11 @@ class SplashScreenState extends State<SplashScreen> {
               height: 240,
             ),
             const SizedBox(height: 20),
-            Image.asset(
-              "assets/images/genesis_title.png",
-              width: 120,
-            ),
+            Text("Srijan", style: TextStyle(color: textCol, fontWeight: FontWeight.bold, fontSize: 36)),
+            // Image.asset(
+            //   "assets/images/genesis_title.png",
+            //   width: 120,
+            // ),
             const SizedBox(height: 150),
 
 
@@ -181,11 +182,11 @@ class SplashScreenState extends State<SplashScreen> {
 
     if(isLoggedIn == null){
 
-        Timer(const Duration(seconds: 3),(){
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => const SignInPage(),));
+      Timer(const Duration(seconds: 3),(){
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const SignInPage(),));
 
-              },);
+      },);
 
     }else{
       if(isProfCreated==null){

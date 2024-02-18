@@ -1,12 +1,15 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:genesis_flutter/CommonChatPlatform/questions_reply.dart';
 import 'package:genesis_flutter/CommunityReq/helper_function.dart';
+import 'package:genesis_flutter/DietRecomendation/DietsPage.dart';
 import 'package:genesis_flutter/appointments/SelectDetails.dart';
 import 'package:genesis_flutter/chatbot/ChatBot.dart';
 import 'package:genesis_flutter/chatbot/ChatScreen.dart';
 import 'package:genesis_flutter/news/NewsScreen.dart';
 import 'package:genesis_flutter/news/NewsService.dart';
+import 'package:genesis_flutter/trackers/DietRecomendation/DietsPage.dart';
 import 'package:genesis_flutter/trackers/YogaTracker/YogaPoseDetection/Views/PoseDetectorView.dart';
 import 'package:genesis_flutter/trackers/YogaTracker/YogaTypesUI/yoga_tipes.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -77,15 +80,19 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         elevation: 2,
         isExtended: true,
-        backgroundColor: Colors.amber,
+        backgroundColor: Colors.white,
         onPressed: () {
-           Navigator.of(context).push(
-                          MaterialPageRoute(builder: (_) => const ChatScreen()));
+          Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ChatScreen()));
         },
-        child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Center(child: Image.asset('assets/images/bot.png')),
+
+        child: Center(
+          child: Image.asset(
+            'assets/images/chat_bot.png',
+            width: 120,  // Adjust the width as needed
+            height: 120, // Adjust the height as needed
+          ),
         ),
+
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -260,15 +267,68 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
+
+                ],
+
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => const DietsPage()));
+                    },
+                    child: Container(
+                      child: Column(
+                        children: [
+                          Card(
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Container(
+                              height: 80,
+                              width: 80,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.asset(
+                                  'assets/images/diet_icon.png',
+                                  width: 80, // Adjust the width as needed
+                                  height: 80,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 120,
+                            child: Center(
+                              child: Text(
+                                'Diet Section',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
               SizedBox(
                 height: 20,
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                alignment: Alignment.centerLeft,
-                child: Text("Mama's News Feed",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),)),
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  alignment: Alignment.centerLeft,
+                  child: Text("Mama's News Feed",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),)),
               FutureBuilder<List<Article>>(
                 future: futureArticles,
                 builder: (context, snapshot) {
@@ -300,8 +360,8 @@ class UserCard extends StatelessWidget {
   const UserCard(this.article);
 
   _launchURL(url_1) async {
-     final Uri url = Uri.parse('$url_1');
-   // final Uri url = Uri.parse('https://www.google.com/maps/search/hospitals nearby');
+    final Uri url = Uri.parse('$url_1');
+    // final Uri url = Uri.parse('https://www.google.com/maps/search/hospitals nearby');
     if (!await launchUrl(url)) {
       throw Exception('Could not launch $url');
     }
@@ -329,7 +389,7 @@ class UserCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 child: Container(
                     decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(12)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(12)),
                     width: double.infinity,
                     child: Image.network(
                       article.image,
@@ -347,9 +407,9 @@ class UserCard extends StatelessWidget {
               Text(article.description),
               SizedBox(height: 5,),
               Container(
-                alignment: Alignment.center,
-                child: Text('Click to read more',
-                style: TextStyle(fontWeight: FontWeight.bold,),)),
+                  alignment: Alignment.center,
+                  child: Text('Click to read more',
+                    style: TextStyle(fontWeight: FontWeight.bold,),)),
             ],
           ),
         ),
@@ -378,7 +438,7 @@ class WeekScroll extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: 40,
             controller:
-                ScrollController(initialScrollOffset: initialScrollOffset),
+            ScrollController(initialScrollOffset: initialScrollOffset),
             itemBuilder: (context, index) {
               final isCurrentWeek = index == currentWeek - 1;
 
@@ -525,6 +585,7 @@ class ProgressPainter extends CustomPainter {
         false,
         bluePaint);
   }
+
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return false;
