@@ -11,6 +11,7 @@ import 'package:genesis_flutter/global_bloc.dart';
 import 'package:genesis_flutter/model/error.dart';
 import 'package:genesis_flutter/model/medicine_type.dart';
 import 'package:genesis_flutter/trackers/MedicineTracker/SuccessfulMedAddScreen.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 
@@ -46,6 +47,7 @@ class _MedicineDetailsState extends State<MedicineDetails> {
     medNameController = TextEditingController();
     dosageController = TextEditingController();
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    requestNotificationPermissions();
     initialisedNotifications();
     _newEntryBloc = NewEntryBloc();
     initialiseErrorListen();
@@ -293,11 +295,18 @@ class _MedicineDetailsState extends State<MedicineDetails> {
       return ids;
   }
 
+  Future<void> requestNotificationPermissions() async {
+    var status = await Permission.notification.status;
+    if (status == PermissionStatus.denied) {
+      await Permission.notification.request();
+    }
+  }
+
   initialisedNotifications() async {
-    var initializationSettingsAndroid = const AndroidInitializationSettings('@mipmap/launcher_icon');
+    var initializationSettingsAndroid = const AndroidInitializationSettings('@mipmap/ic_launcher');
     var initialisationSettingsIOS = const DarwinInitializationSettings();
     var initializationSettings = InitializationSettings(
-      android: initializationSettingsAndroid, iOS: initialisationSettingsIOS);
+        android: initializationSettingsAndroid, iOS: initialisationSettingsIOS);
 
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
@@ -319,7 +328,7 @@ class _MedicineDetailsState extends State<MedicineDetails> {
     var androidPlatformChannelSpecifies = const AndroidNotificationDetails(
     'repeatDailyAtTime channel id', 'repeatDailyAtTime channel name',
     importance: Importance.max,
-     // ledColor: Colors.pink[100],
+     //ledColor: Color.pink[100],
       ledOffMs: 1000,
       ledOnMs: 1000,
       enableLights: true

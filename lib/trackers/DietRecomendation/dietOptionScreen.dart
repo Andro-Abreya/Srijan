@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:genesis_flutter/DietRecomendation/DietData/breakfastData.dart';
 
 const greyColor = Color(0xFFD9D9D9);
 

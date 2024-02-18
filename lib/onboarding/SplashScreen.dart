@@ -110,10 +110,11 @@ class SplashScreenState extends State<SplashScreen> {
               height: 240,
             ),
             const SizedBox(height: 20),
-            Image.asset(
-              "assets/images/genesis_title.png",
-              width: 120,
-            ),
+            Text("Srijan", style: TextStyle(color: textCol, fontWeight: FontWeight.bold, fontSize: 36)),
+            // Image.asset(
+            //   "assets/images/genesis_title.png",
+            //   width: 120,
+            // ),
             const SizedBox(height: 150),
 
 

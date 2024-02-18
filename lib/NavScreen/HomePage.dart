@@ -1,12 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:genesis_flutter/CommonChatPlatform/questions_reply.dart';
 import 'package:genesis_flutter/CommunityReq/helper_function.dart';
 import 'package:genesis_flutter/appointments/SelectDetails.dart';
 import 'package:genesis_flutter/chatbot/ChatBot.dart';
 import 'package:genesis_flutter/chatbot/ChatScreen.dart';
 import 'package:genesis_flutter/news/NewsScreen.dart';
 import 'package:genesis_flutter/news/NewsService.dart';
+import 'package:genesis_flutter/trackers/DietRecomendation/DietsPage.dart';
 import 'package:genesis_flutter/trackers/YogaTracker/YogaPoseDetection/Views/PoseDetectorView.dart';
 import 'package:genesis_flutter/trackers/YogaTracker/YogaTypesUI/yoga_tipes.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -77,15 +79,19 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         elevation: 2,
         isExtended: true,
-        backgroundColor: Colors.amber,
+        backgroundColor: Colors.white,
         onPressed: () {
-           Navigator.of(context).push(
-                          MaterialPageRoute(builder: (_) => const ChatScreen()));
+          Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ChatScreen()));
         },
-        child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Center(child: Image.asset('assets/images/bot.png')),
-        ),
+
+          child: Center(
+            child: Image.asset(
+              'assets/images/chat_bot.png',
+              width: 120,  // Adjust the width as needed
+              height: 120, // Adjust the height as needed
+            ),
+          ),
+
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -118,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                 height: 20,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
                     onTap: () {
@@ -249,6 +255,59 @@ class _HomePageState extends State<HomePage> {
                             child: Center(
                               child: Text(
                                 'BreastFeeding',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                ],
+
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => const DietsPage()));
+                    },
+                    child: Container(
+                      child: Column(
+                        children: [
+                          Card(
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Container(
+                              height: 80,
+                              width: 80,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.asset(
+                                  'assets/images/diet_icon.png',
+                                  width: 80, // Adjust the width as needed
+                                  height: 80,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 120,
+                            child: Center(
+                              child: Text(
+                                'Diet Section',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,

@@ -64,6 +64,8 @@ dependencies:
   dialog_flowtter: ^0.3.3
   url_launcher: ^6.2.4
   location: ^5.0.3
+  permission_handler: ^11.3.0
+  firebase_storage: any
 
 
 dev_dependencies:
