@@ -38,5 +38,6 @@
             android:value="2" />
 
         <meta-data android:name="clientId" android:value="966596442183-hqq32oj50l2rprnpmn7h9l7v3di5uq45.apps.googleusercontent.com" />
+
     </application>
 </manifest>

@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:genesis_flutter/NavScreen/BaseScreen.dart';
 import 'package:genesis_flutter/appointments/button.dart';
+import 'package:genesis_flutter/appointments/dashboard_screen.dart';
 import 'package:genesis_flutter/global_bloc.dart';
 import 'package:genesis_flutter/onboarding/SplashScreen.dart';
 import 'package:provider/provider.dart';
@@ -41,6 +42,7 @@ class _MyAppState extends State<MyApp>{
     globalBloc = GlobalBloc();
     super.initState();
   }
+  
   @override
   Widget build(BuildContext context) {
         return Provider<GlobalBloc>.value(
