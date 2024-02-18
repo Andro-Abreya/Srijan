@@ -525,7 +525,6 @@ class ProgressPainter extends CustomPainter {
         false,
         bluePaint);
   }
-
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return false;

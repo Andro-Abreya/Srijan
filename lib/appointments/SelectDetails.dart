@@ -11,10 +11,10 @@ class SelectDetails extends StatefulWidget {
 }
 
 class _SelectDetailsState extends State<SelectDetails> {
- // TimeOfDay _selectedTime = TimeOfDay.now();
+  // TimeOfDay _selectedTime = TimeOfDay.now();
   String amPm = DateTime.now().hour < 12 ? 'AM' : 'PM';
-
-  Time _time = Time(hour: TimeOfDay.now().hour, minute:TimeOfDay.now().minute);
+  DateTime? date1 = DateTime.now(),time1 = DateTime.now();
+  Time _time = Time(hour: TimeOfDay.now().hour, minute: TimeOfDay.now().minute);
   bool iosStyle = true;
 
   void onTimeChanged(Time newTime) {
@@ -38,7 +38,10 @@ class _SelectDetailsState extends State<SelectDetails> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('Select Date',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+            Text(
+              'Select Date',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            ),
             CalendarApp(
               startDate: DateTime(2024, 1, 1),
               selectedDecoration: BoxDecoration(
@@ -46,7 +49,8 @@ class _SelectDetailsState extends State<SelectDetails> {
                 borderRadius: BorderRadius.all(Radius.circular(30)),
               ),
               onSelectedDate: (date) {
-                print(date);
+                date1 = date;
+                print(date1);
               },
               endDate: DateTime.now().add(const Duration(days: 10)),
               enablePredicate: (date) {
@@ -66,32 +70,45 @@ class _SelectDetailsState extends State<SelectDetails> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Text('Select Time :',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                  const Text(
+                    'Select Time :',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
                   InkWell(
-                    onTap: () async{
-                    Navigator.of(context).push(
-                      await showPicker(
-                        showSecondSelector: false,
-                        context: context,
-                        value: _time,
-
-                        onChange: onTimeChanged,
-                        minuteInterval: TimePickerInterval.THIRTY,
-                        // Optional onChange to receive value as DateTime
-                        onChangeDateTime: (DateTime dateTime) {
-                          // print(dateTime);
-                          debugPrint("[debug datetime]:  $dateTime");
-                        },
-                      ),
-                    );
-                  },
+                    onTap: () async {
+                      Navigator.of(context).push(
+                        await showPicker(
+                          showSecondSelector: false,
+                          context: context,
+                          value: _time,
+                          onChange: onTimeChanged,
+                          minuteInterval: TimePickerInterval.THIRTY,
+                          // Optional onChange to receive value as DateTime
+                          onChangeDateTime: (DateTime dateTime) {
+                            // print(dateTime);
+                            time1 = dateTime;
+                            debugPrint("[debug datetime]:  $time1");
+                          },
+                        ),
+                      );
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                            '${_time.hour <= 12 ? (_time.hour < 10?"0${_time.hour.toString()}":_time.hour.toString()) : (_time.hour-12 < 10?"0${(_time.hour-12).toString()}":(_time.hour-12).toString())} : ${_time.minute < 10?"0${_time.minute.toString()}":_time.minute.toString()} $amPm',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Colors.purple[700]),),
-                            SizedBox(width: 10,),
-                  Icon(Icons.edit_note,size: 30,),
+                          '${_time.hour <= 12 ? (_time.hour < 10 ? "0${_time.hour.toString()}" : _time.hour.toString()) : (_time.hour - 12 < 10 ? "0${(_time.hour - 12).toString()}" : (_time.hour - 12).toString())} : ${_time.minute < 10 ? "0${_time.minute.toString()}" : _time.minute.toString()} $amPm',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.purple[700]),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(
+                          Icons.edit_note,
+                          size: 30,
+                        ),
                       ],
                     ),
                   ),
@@ -104,7 +121,11 @@ class _SelectDetailsState extends State<SelectDetails> {
             InkWell(
               onTap: () => {
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (_) => DoctorList()))
+                    .push(MaterialPageRoute(builder: (_) => DoctorList(),
+                    settings: RouteSettings(
+      arguments: {'date': date1,
+                  'time': time1},
+    ),))
               },
               child: Container(
                 alignment: Alignment.center,

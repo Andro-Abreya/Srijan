@@ -1,5 +1,8 @@
 //import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:genesis_flutter/appointments/appointment_details.dart';
+import 'package:genesis_flutter/appointments/create_screen.dart';
+import 'package:google_meet_sdk/google_meet_sdk.dart';
 import 'package:lottie/lottie.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:awesome_dialog/awesome_dialog.dart';
@@ -9,19 +12,25 @@ class Doctors {
   final String qualification;
   final String imageUrl;
   final String rate;
+  final String email;
+  final String speciality;
 
   Doctors({
     required this.name,
     required this.qualification,
     required this.rate,
     required this.imageUrl,
+    required this.email,
+    required this.speciality,
   });
 
    Doctors.fromFirestore(Map<String, dynamic> data)
       : name = data['name'],
         qualification = data['qualification'],
         imageUrl = data['imageUrl'],
-        rate = data['rate'];
+        rate = data['rate'],
+        speciality = data['speciality'],
+        email = data['email'];
 }
 
 class DoctorList extends StatefulWidget {
@@ -33,6 +42,10 @@ class DoctorList extends StatefulWidget {
 
 class _DoctorListState extends State<DoctorList> {
  
+   DateTime? date1,time1;
+   String? name1,email1,speciality1,qualification1,imageUrl1;
+  
+
   final colors = [
     Colors.red[100],
     Colors.blue[100],
@@ -67,6 +80,11 @@ class _DoctorListState extends State<DoctorList> {
 
   @override
   Widget build(BuildContext context) {
+    final data = ModalRoute.of(context)?.settings.arguments as Map<String, DateTime?>;
+   // print(data['date']!.year);
+
+    date1 = data['date'];
+    time1 = data['time'];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.purple,
@@ -104,6 +122,10 @@ class _DoctorListState extends State<DoctorList> {
                   itemBuilder: (context, index) {
                     final doctors = snapshot.data![index];
                     final name = doctors.name;
+                    final qual = doctors.qualification;
+                    final email = doctors.email;
+                    final imgUrl = doctors.imageUrl;
+                    final speciality = doctors.speciality;
                     final color = colors[(index % 7)];
                     final style = (name.contains('CEO')
                         ? const TextStyle(fontWeight: FontWeight.bold)
@@ -114,7 +136,12 @@ class _DoctorListState extends State<DoctorList> {
                       ),
                       color: color,
                       child: InkWell(
-                        onTap: () => {
+                        onTap: () {
+                          name1 = name;
+                          qualification1 = qual;
+                          email1 = email;
+                          speciality1 = speciality;
+                          imageUrl1 = imgUrl;
                           showModalBottomSheet(
                             context: context,
                             builder: (context) => Padding(
@@ -160,7 +187,7 @@ class _DoctorListState extends State<DoctorList> {
                                 ),
                               ),
                             ),
-                          ),
+                          );
                         },
                         child: ListTile(
                           leading: Image.network(doctors.imageUrl),
@@ -245,7 +272,8 @@ class _DoctorListState extends State<DoctorList> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pop(); // Close the dialog
+                    Navigator.of(context).pop();
+                    // Close the dialog
                     // Add your action here for the first button
                   },
                   child: Text(
@@ -258,9 +286,27 @@ class _DoctorListState extends State<DoctorList> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pop(); // Close the dialog
+                   GoogleAuthentication.signInWithGoogle(context: context)
+                .then((value) {
+                  print("${value} 1");
+              if (value != null) {
+                    Navigator.of(context)
+                    .pushReplacement(MaterialPageRoute(builder: (_) => const AppointmentDetails(),
+                    settings: RouteSettings(
+      arguments: {'date': date1,
+                  'time': time1,
+                  'name': name1,
+                  'qual': qualification1,
+                  'speciality': speciality1,
+                  'email': email1,
+                  'imageUrl': imageUrl1,
+                  },)));// Close the dialog
                     // Add your action here for the second button
-                  },
+                  }
+                 else {
+                debugPrint('something went wrong while login...');
+              }
+                  });},
                   child: Text(
                     'Confirm',
                     style: TextStyle(
