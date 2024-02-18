@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:genesis_flutter/CommonChatPlatform/questions_reply.dart';
 import 'package:genesis_flutter/NavScreen/AidPage.dart';
 import 'package:genesis_flutter/NavScreen/CommunityPage.dart';
 import 'package:genesis_flutter/NavScreen/HomePage.dart';
@@ -20,9 +21,9 @@ class _MyAppState extends State<BaseScreen> {
 
   final List<Widget> _fragments = [
     const HomePage(initialWeek: 8),
-    const CommunityPage(),
+    QnAApp(),
     const AidPage(),
-     ProfilePage(),
+    ProfilePage(),
   ];
 
   @override
