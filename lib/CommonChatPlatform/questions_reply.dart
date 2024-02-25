@@ -104,7 +104,8 @@ class _QnAAppState extends State<QnAApp> {
                 return _buildQuestionItem(question);
               },
             ),
-          )
+          ),
+           SizedBox(height: 30,),
           // StreamBuilder<List<Question>>(
           //   stream: _firestoreService.getQuestions(), // Use a stream from the future
           //   builder: (context, snapshot) {
@@ -151,100 +152,112 @@ class _QnAAppState extends State<QnAApp> {
 
 
   Widget _buildQuestionItem(Question question) {
-    return Card(
-      margin: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 20.0,
-                  backgroundImage: Image.network(question.userProfPic).image, // You can use an image here if you have user profile pictures
-                ),
-                SizedBox(width: 8.0),
-                Text(
-                  question.userName, // Replace with the actual user's name
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-               child: Text(
-                    question.text,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),),
-
-
-
-                SizedBox(width: 10,),
-                // Add spacer to push comment icon to the right
-           (question.imageUrl != null && question.imageUrl.isNotEmpty)?
+    return InkWell(
+     onTap: (){
+       Navigator.push(
+         context,
+         MaterialPageRoute(
+           builder: (context) => CommentScreen(question: question,imageUrl: question.imageUrl),
+         ),
+       );
+       },
+      child: Card(
+        margin: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Image.network(
-                question.imageUrl,
-                height: 150, // Adjust the height as needed
-                width: double.infinity, // Take the full width of the card
-                fit: BoxFit.contain,
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 20.0,
+                    backgroundImage: Image.network(question.userProfPic).image, // You can use an image here if you have user profile pictures
+                  ),
+                  SizedBox(width: 8.0),
+                  Text(
+                    question.userName, // Replace with the actual user's name
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
-            ):Container(),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(width: 200,),
-                      InkWell(
-                        onTap: (){
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left:12.0, top:8),
+                 child: Text(
+                      question.text,
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),),
 
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CommentScreen(question: question),
-                            ),
-                          );
 
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.blue.withOpacity(0.2),
-                              borderRadius: BorderRadius.circular(12)
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all( 8.0),
 
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 2.0),
-                                    child: Text(
-                                      "Ans",
-                                      style: TextStyle(fontSize: 14, color: Colors.blue, fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Icon(Icons.edit, color: Colors.blue,size: 20,),
-
-                                ],
-                              ),
-
-                          ),
-
-                        ),
-                      ),
-                    ],
+                  SizedBox(width: 10,),
+                  // Add spacer to push comment icon to the right
+             (question.imageUrl != null && question.imageUrl.isNotEmpty)?
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: double.infinity,
+                  child: Image.network(
+                    question.imageUrl,
+                    height: 150, // Adjust the height as needed
+                    width: double.infinity, // Take the full width of the card
+                    fit: BoxFit.cover,
                   ),
                 ),
+              ):Container(),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                      IconButton(icon:Icon(Icons.favorite_border, size: 20,),onPressed: (){} ),
+                        InkWell(
+                          onTap: (){
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CommentScreen(question: question, imageUrl: question.imageUrl),
+                              ),
+                            );
+
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.blue.withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(12)
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all( 8.0),
+
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 2.0),
+                                      child: Text(
+                                        "Comment",
+                                        style: TextStyle(fontSize: 14, color: Colors.blue, fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Icon(Icons.edit, color: Colors.blue,size: 20,),
+
+                                  ],
+                                ),
+
+                            ),
+
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
 
 
-        ],
+          ],
+        ),
       ),
     );
   }
