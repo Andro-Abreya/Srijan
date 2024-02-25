@@ -9,7 +9,7 @@ import 'package:genesis_flutter/NavScreen/ProfilePage.dart';
 class CommentScreen extends StatefulWidget {
   final Question question;
 
-  CommentScreen({required this.question});
+  CommentScreen({required this.question, required String imageUrl});
 
   @override
   _CommentScreenState createState() => _CommentScreenState();
@@ -63,6 +63,17 @@ class _CommentScreenState extends State<CommentScreen> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
+                (widget.question.imageUrl != null && widget.question.imageUrl.isNotEmpty)
+                    ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.network(
+                    widget.question.imageUrl,
+                    height: 150,
+                    width: double.infinity,
+                    fit: BoxFit.contain,
+                  ),
+                )
+                    : Container(),
               ],
             ),
           ),

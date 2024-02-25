@@ -5,6 +5,7 @@ import 'package:genesis_flutter/CommonChatPlatform/questions_reply.dart';
 import 'package:genesis_flutter/CommunityReq/helper_function.dart';
 import 'package:genesis_flutter/DietRecomendation/DietsPage.dart';
 import 'package:genesis_flutter/appointments/SelectDetails.dart';
+import 'package:genesis_flutter/appointments/dashboard_screen.dart';
 import 'package:genesis_flutter/chatbot/ChatBot.dart';
 import 'package:genesis_flutter/chatbot/ChatScreen.dart';
 import 'package:genesis_flutter/news/NewsScreen.dart';
@@ -325,6 +326,88 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 20,
               ),
+
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 15),
+                child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(20.0),
+                        // Adjust the radius as needed
+                        child: Image.asset(
+                          'assets/images/appoint.png',
+                          fit: BoxFit.cover,
+                          height: 150,
+                          width: 350,
+                        ),
+                      ),
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10.0, left:12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Recent Appointments",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Container(
+                                width: 200,
+                                child: Text("Check your recent appointments here",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.white),
+                                    textAlign: TextAlign.start),
+                              ),
+                              SizedBox(height: 25,),
+                              GestureDetector(
+                                onTap: () async {
+
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (_) => const DashboardScreen()));
+                                },
+                                child: Container(
+                                    width: 80,
+                                    padding: EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(15)),
+
+                                    child: Center(
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "See all",
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.w500,
+                                            ),),
+                                          SizedBox(width: 2,),
+                                          Icon(Icons.arrow_forward, color: Colors.grey,size: 18,),
+
+                                        ],
+                                      ),
+                                    )
+
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+
+
+                    ]
+                ),
+              ),
+              SizedBox(height: 20,),
               Container(
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   alignment: Alignment.centerLeft,

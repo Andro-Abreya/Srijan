@@ -438,7 +438,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Text(
                                   'BreastFeeding Duration',
                                   style: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: 13,
                                     color: Colors.grey,
                                   ),
                                 ),
