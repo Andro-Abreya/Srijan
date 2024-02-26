@@ -44,15 +44,6 @@ Need not to go anywher contact a doctor through the app only as per the convenie
  ### Chat bot :
  To resolve the general queries of mothers regarding pregnancy.
 
- 
-![Frame 912](https://user-images.githubusercontent.com/92329310/230700170-5230cf78-04fa-4788-bf1b-665ec74470e6.png)
-
-![Frame 911](https://user-images.githubusercontent.com/92329310/230700181-9aed250f-01de-4f7d-8647-8288190e8ea8.png)
-
-![Frame 910 (1)](https://user-images.githubusercontent.com/92329310/230700198-6802cb4c-6b4b-4025-a55f-59f33d3e1a42.png)
-
-
-
  # Technology Used
 
  * Android Studio
