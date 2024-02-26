@@ -19,9 +19,6 @@ The project requires gradle version 7.6 or higher.
 Clone the repository on your device, and build the project using Android Studio and run on the connected Android device/emulator.
 
 ## App architecture
-![Frame 909 (1)](https://user-images.githubusercontent.com/92329310/230700292-9d859789-5d31-43b2-8dec-b30d2cb52773.png)
-
-
 
 
 
@@ -60,7 +57,7 @@ Need not to go anywher contact a doctor through the app only as per the convenie
  
 
  # About Us
- The team consist of four members: Abhishek Bharti, Shreya Kumari, Mehul Gupta and Prince Rastogi specialising in Flutter development. All are undergrad at Br. Ambedkar National Institute of Jalandhar.
+ The team consist of four members: Abhishek Bharti, Shreya Kumari, Mehul Gupta and Prince Rastogi specialising in Flutter development. All are undergrad at Dr. BR Ambedkar National Institute of Jalandhar.
 
  
 
