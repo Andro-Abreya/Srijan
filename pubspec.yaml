@@ -48,6 +48,7 @@ dependencies:
   shared_preferences: any
   flutter_svg: ^0.22.0
   rxdart: any
+  http: ^0.13.6
   lottie:
   flutter_local_notifications: ^10.0.0
   intl: ^0.17.0
@@ -69,6 +70,7 @@ dependencies:
   google_meet_sdk:
   permission_handler: ^11.3.0
   firebase_storage: any
+  flutter_stripe: ^9.1.1
   
 
 

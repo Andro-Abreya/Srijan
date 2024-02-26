@@ -2,8 +2,9 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:genesis_flutter/NavScreen/BaseScreen.dart';
-import 'package:genesis_flutter/appointments/button.dart';
+
 import 'package:genesis_flutter/appointments/dashboard_screen.dart';
 import 'package:genesis_flutter/global_bloc.dart';
 import 'package:genesis_flutter/onboarding/SplashScreen.dart';
@@ -21,6 +22,9 @@ Color lightPurple = const Color(0xFFB2B2FF).withOpacity(0.8);
 // AIzaSyC8ZGogQXgo80idNIeDSgU-rjBMLZtx_KQ
 
 Future  main() async {
+  Stripe.publishableKey = "pk_test_51OkaGqSHCLJG2NE0syCuMT4ABeHRFWQluS5PZdslIbnUFbUMKvRlYeY079AgSfH8bkHncMgfFXeHMKhjgOjrluyY00J1zVnS0i";
+   Stripe.merchantIdentifier = 'any string works';
+ // await Stripe.instance.applySettings();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());

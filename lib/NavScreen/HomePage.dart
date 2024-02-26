@@ -360,8 +360,8 @@ class UserCard extends StatelessWidget {
   const UserCard(this.article);
 
   _launchURL(url_1) async {
-    final Uri url = Uri.parse('$url_1');
-    // final Uri url = Uri.parse('https://www.google.com/maps/search/hospitals nearby');
+  //  final Uri url = Uri.parse('$url_1');
+    final Uri url = Uri.parse('https://www.youtube.com/results?search_query=baby+care');
     if (!await launchUrl(url)) {
       throw Exception('Could not launch $url');
     }

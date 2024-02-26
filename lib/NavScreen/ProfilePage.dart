@@ -94,7 +94,7 @@ class _ProfilePageState extends State<ProfilePage> {
     fetchUserData();
   }
   Widget build(BuildContext context) {
-    final FirebaseAuth auth = FirebaseAuth.instance;
+    
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -460,15 +460,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                     color: Colors.grey,
                                   ),
                                 ),
-
                                 SizedBox(height: 20,),
-
-
                               ],
                             ),
                           ),
-
-
                           Padding(
                             padding: const EdgeInsets.only(right: 20.0, top: 70),
                             child:  InkWell(
