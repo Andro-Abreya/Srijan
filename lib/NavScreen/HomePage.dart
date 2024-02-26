@@ -328,7 +328,7 @@ class _HomePageState extends State<HomePage> {
               ),
 
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 15),
+                margin: EdgeInsets.symmetric(horizontal: 8),
                 child: Stack(
                     children: [
                       ClipRRect(

@@ -1,11 +1,17 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+//import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:genesis_flutter/appointments/appointment_info.dart';
 import 'package:genesis_flutter/appointments/color.dart';
+import 'package:genesis_flutter/appointments/confirmation_page.dart';
 import 'package:genesis_flutter/appointments/dashboard_screen.dart';
 import 'package:genesis_flutter/appointments/storage.dart';
 import 'package:google_meet_sdk/google_meet_sdk.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 class AppointmentDetails extends StatefulWidget {
   const AppointmentDetails({super.key});
@@ -16,6 +22,9 @@ class AppointmentDetails extends StatefulWidget {
 
 class _AppointmentDetailsState extends State<AppointmentDetails> {
   int selectedOption = 0;
+  int step = 0;
+
+  DocumentSnapshot<Map<String, dynamic>>? docSnapshot;
 
   Storage storage = Storage();
   CalendarClient calendarClient = CalendarClient();
@@ -40,14 +49,11 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
   String? currentTitle = "";
   String? currentDesc = "";
   String? currentLocation = "Srijan App";
-  String? currentEmail = "abhishekbhartirocks1@gmail.com";
   String errorString = '';
-  List<String> attendeeEmails = [
-    "abhishekb.it.21@nitj.ac.in"
-  ];
+  List<String> attendeeEmails = ["abhishekb.it.21@nitj.ac.in.com"];
+  // FirebaseAuth auth = FirebaseAuth.instance;
   final user = FirebaseAuth.instance.currentUser;
-    FirebaseAuth auth = FirebaseAuth.instance;
-    
+
   bool isEditingDate = false;
   bool isEditingStartTime = false;
   bool isEditingEndTime = false;
@@ -60,6 +66,60 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
   bool hasConferenceSupport = false;
 
   bool isDataStorageInProgress = false;
+  Map<String,dynamic>? paymentIntent;
+
+//   makePayment()async{
+//     try {
+//       //  Future<Map<String, dynamic>> paymentIntent = createPaymentIntent();
+//        paymentIntent = await createPaymentIntent();
+//         var gpay = const PaymentSheetGooglePay(merchantCountryCode: "IN",
+//         currencyCode: "INR",
+//         testEnv: true);
+
+//        await Stripe.instance.initPaymentSheet(paymentSheetParameters: SetupPaymentSheetParameters(
+//           paymentIntentClientSecret: paymentIntent!["client_secret"],
+//           // customFlow: true,
+//           // customerId: data['customer'],
+//           style: ThemeMode.dark,
+//           merchantDisplayName: "Srijan",
+//           googlePay: gpay
+//         ));
+
+//         displayPaymentSheet();
+//     } catch (e) {
+//       debugPrint(e.toString());
+//     }
+//   }
+  
+//   void displayPaymentSheet() async
+//   {
+//     try{
+      
+//       await Stripe.instance.presentPaymentSheet();
+//       print("Done");
+//     }catch(e){
+//       print("Failed+ ${e}");
+//     }
+//   }
+
+//  createPaymentIntent() async {
+//     try {
+//       Map<String, dynamic> body = {
+//         "amount": "1000",
+//         "currency": "INR",
+//       };
+//       http.Response response = await http.post(
+//           Uri.parse("https://api.stripe.com/v1/payment_intents"),
+//           body: body,
+//           headers: {
+//             "Authorization": "Bearer sk_test_51OkaGqSHCLJG2NE0q78fwKo1xvzLji61EZHxacL11e0T0FOIDYRS4FkjMxziISvCMk7zqIDSYXmaiTorC2VVOmr600YSYVfQsb",
+//             "Content-Type": "application/x-www-form-urlencoded",
+//           });
+//           return json.decode(response.body);
+//     } catch (e) {
+//       throw Exception(e.toString());
+//     }
+//   }
 
   _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -119,14 +179,12 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
     } else {
       return 'Title can\'t be empty';
     }
-
     return null;
   }
 
   String? _validateEmail(String value) {
     if (value.isNotEmpty) {
       value = value.trim();
-
       if (value.isEmpty) {
         return 'Can\'t add an empty email';
       } else {
@@ -142,12 +200,12 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
     } else {
       return 'Can\'t add an empty email';
     }
-
     return 'Invalid email';
   }
 
   @override
-  void initState() {
+  void initState()  {
+    getData();
     textControllerDate = TextEditingController();
     textControllerStartTime = TextEditingController();
     textControllerEndTime = TextEditingController();
@@ -166,13 +224,16 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final  uid = user?.displayName;
-   
-     final data = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-      attendeeEmails.add(data['email']);
-      debugPrint(attendeeEmails.toString());
- currentTitle = "Appointment of ${uid} with ${data['name']}";
     
+    final uid = user?.displayName;
+    print(docSnapshot?.data());
+
+    final data =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    attendeeEmails.add(data['email']);
+    debugPrint(attendeeEmails.toString());
+    currentTitle = "Appointment of ${uid} with ${data['name']}";
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(title: Text('Appointment Details')),
@@ -188,8 +249,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding:
-                          const EdgeInsets.only(top: 32.0),
+                      padding: const EdgeInsets.only(top: 32.0),
                       child: Row(
                         children: [
                           ClipRRect(
@@ -223,8 +283,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                     ),
                     // Appointment details section
                     Padding(
-                      padding:
-                          const EdgeInsets.only(top: 32.0),
+                      padding: const EdgeInsets.only(top: 32.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -247,7 +306,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                   padding: EdgeInsets.all(1),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12),
-                                    color: Colors.blue[300],
+                                    color: Colors.purple,
                                   ),
                                   child: Icon(
                                     Icons.calendar_month_outlined,
@@ -278,7 +337,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                   padding: EdgeInsets.all(1),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12),
-                                    color: Colors.blue[300],
+                                    color: Colors.purple,
                                   ),
                                   child: Icon(
                                     Icons.access_time,
@@ -289,9 +348,11 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                   width: 12,
                                 ),
                                 Text(
-                                  data['time']!.hour >= 12 ?
-                                  data['time'].hour > 12 ?'${data['time'].hour - 12} : ${data['time'].minute} PM': '${data['time'].hour} : ${data['time'].minute}':
-                                  '${data['time'].hour} : ${data['time'].minute} AM',
+                                  data['time']!.hour >= 12
+                                      ? data['time'].hour > 12
+                                          ? '${data['time'].hour - 12} : ${data['time'].minute} PM'
+                                          : '${data['time'].hour} : ${data['time'].minute}'
+                                      : '${data['time'].hour} : ${data['time'].minute} AM',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 16),
@@ -310,7 +371,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top:16.0),
+                            padding: const EdgeInsets.only(top: 16.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -324,10 +385,10 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                           color: const Color.fromARGB(
-                                              255, 100, 181, 246),
+                                              255, 156, 39, 176),
                                           width: 2),
                                       color: selectedOption == 0
-                                          ? Colors.blue[300]
+                                          ? Colors.purple
                                           : Colors.white,
                                       borderRadius: BorderRadius.circular(16),
                                     ),
@@ -363,10 +424,10 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                           color: const Color.fromARGB(
-                                              255, 100, 181, 246),
+                                              255, 156, 39, 176),
                                           width: 2),
                                       color: selectedOption == 1
-                                          ? Colors.blue[300]
+                                          ? Colors.purple
                                           : Colors.white,
                                       borderRadius: BorderRadius.circular(16),
                                     ),
@@ -421,11 +482,14 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Container(
                       alignment: Alignment.center,
-                      decoration: BoxDecoration(color: Colors.blue[300], borderRadius: BorderRadius.circular(12)),
-                    
+                      decoration: BoxDecoration(
+                          color: Colors.purple,
+                          borderRadius: BorderRadius.circular(12)),
                       width: double.maxFinite,
                       child: InkWell(
                         // elevation: 0,
@@ -435,6 +499,9 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                         onTap: isDataStorageInProgress
                             ? null
                             : () async {
+
+                              //await makePayment();
+
                                 setState(() {
                                   isErrorTime = false;
                                   isDataStorageInProgress = true;
@@ -458,18 +525,17 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                       data['time'].minute + 30 > 60
                                           ? DateTime(
                                               data['date'].year,
-                                    data['date'].month,
-                                    data['date'].day,
-                                    data['time'].hour + 1,
-                                    data['time'].minute - 30,
+                                              data['date'].month,
+                                              data['date'].day,
+                                              data['time'].hour + 1,
+                                              data['time'].minute - 30,
                                             ).millisecondsSinceEpoch
                                           : DateTime(
                                               data['date'].year,
-                                    data['date'].month,
-                                    data['date'].day,
-                                    data['time'].hour,
-                                    data['time'].minute + 30,
-                                            
+                                              data['date'].month,
+                                              data['date'].day,
+                                              data['time'].hour,
+                                              data['time'].minute + 30,
                                             ).millisecondsSinceEpoch;
                                   if (endTimeInEpoch - startTimeInEpoch > 0) {
                                     if (_validateTitle(currentTitle ?? "") ==
@@ -492,7 +558,6 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                         String eventId = eventData!['id'] ?? "";
                                         String eventLink =
                                             eventData['link'] ?? "";
-                                            
 
                                         List<String> emails = [];
                                         for (int i = 0;
@@ -500,8 +565,6 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                             i++) {
                                           emails.add(attendeeEmails[i]);
                                         }
-
-                                        
 
                                         AppointmentInfo eventInfo =
                                             AppointmentInfo(
@@ -514,12 +577,14 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                           shouldNotifyAttendees: true,
                                           hasConferencingSupport: true,
                                           startTimeInEpoch: startTimeInEpoch,
-                                          endTimeInEpoch: endTimeInEpoch, 
-                                           speciality: data['speciality'], 
-                                          dName: data['name'], 
-                                          dQual: data['qual'], 
-                                          dImage: data['imageUrl'], 
-                                          hasChatEnabled: selectedOption == 1 ? true: false,
+                                          endTimeInEpoch: endTimeInEpoch,
+                                          speciality: data['speciality'],
+                                          dName: data['name'],
+                                          dQual: data['qual'],
+                                          dImage: data['imageUrl'],
+                                          hasChatEnabled: selectedOption == 1
+                                              ? true
+                                              : false,
                                         );
 
                                         await storage
@@ -528,7 +593,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                                     context)
                                                 .pushReplacement(MaterialPageRoute(
                                                     builder: (_) =>
-                                                        const DashboardScreen())));
+                                                        const ConfirmationPage())));
                                       }).catchError(
                                         (e) {
                                           debugPrint(e);
@@ -564,7 +629,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                 setState(() {
                                   isDataStorageInProgress = false;
                                 });
-                              },
+                               },
                         child: Container(
                           alignment: Alignment.center,
                           width: double.infinity,
@@ -620,7 +685,18 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
       ),
     );
   }
+
+getData() async {
+ var collection = FirebaseFirestore.instance.collection('Users');
+docSnapshot = await collection.doc('${user?.uid}').get();
+if (docSnapshot!.exists) {
+  Map<String, dynamic>? data = docSnapshot?.data();
+  //var value = data?['some_field']; // <-- The value you want to retrieve. 
+  // Call setState if needed.
 }
+}
+}
+
 
 //   @override
 //   Widget build(BuildContext context) {
